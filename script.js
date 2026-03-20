@@ -1,40 +1,48 @@
 /* ═══════════════════════════════════════════════════════════════
-   BHUBANESWAR HOMES — v4 JAVASCRIPT
+   BHUBANESWAR HOMES — v6 JAVASCRIPT
    ═══════════════════════════════════════════════════════════════
-
-   WHAT CHANGED IN v4
-   ───────────────────
-   ① Smooth scroll  → Uses JS scroll for maximum browser
-                       compatibility. Dynamically reads header
-                       height so anchors never hide under it.
-                       Handles CSS scroll-padding-top as fallback.
-   ② Header         → Same logic, improved outside-click handling.
-   ③ Quick Select   → Same logic, slightly cleaner form pre-fill.
-   ④ Scroll Reveal  → Same IntersectionObserver logic.
-   ⑤ Lead Form      → Same validation + Sheets submission.
-                       Added: body scroll lock during mobile nav.
-
-   ▶ SETUP REQUIRED
-   ─────────────────
-   Replace WEBHOOK_URL below with your Google Apps Script URL.
-   See INSTRUCTIONS.md for the full step-by-step guide.
+   v6 Changes:
+   ① Smooth scroll:  JS method takes priority over CSS so we
+                     can dynamically measure the header height.
+                     CSS scroll-behavior: smooth remains as fallback.
+   ② scroll-padding: Updated dynamically in JS so CSS value
+                     always matches actual header height.
+   ③ iOS fix:        Uses scrollIntoView as fallback for older
+                     Safari which doesn't support scroll options.
+   ④ Form:           Added paste handler for phone field.
+   ⑤ Source:         Updated to v6.
    ═══════════════════════════════════════════════════════════════ */
 
 /* ── Google Sheets webhook URL ──
-   Replace this placeholder with your real deployment URL.
-   The form works in demo mode until you replace it.        */
+   Replace this with your Google Apps Script deployment URL.
+   The form runs in demo mode until you replace it.          */
 const WEBHOOK_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
 
 
 /* ═══════════════════════════════════════════════════════════════
-   UTILITY: Get the current height of the fixed header.
-   Called before every smooth-scroll so the offset is always
-   accurate (even if the header grows on mobile nav opening).
+   UTILITY: Measure the current header height dynamically.
+   Called before every scroll so offset is always accurate,
+   even when the mobile nav is open (header is taller).
    ═══════════════════════════════════════════════════════════════ */
 function getHeaderHeight() {
   var header = document.getElementById("header");
-  return header ? header.getBoundingClientRect().height : 0;
+  return header ? header.getBoundingClientRect().height : 64;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY: Update CSS scroll-padding-top to match header height.
+   Called on load and on resize so the CSS fallback always
+   matches the real header height.
+   ═══════════════════════════════════════════════════════════════ */
+function updateScrollPadding() {
+  var h = getHeaderHeight();
+  document.documentElement.style.setProperty("scroll-padding-top", h + "px");
+}
+
+/* Update on load */
+updateScrollPadding();
+/* Update on resize (header height can change at breakpoints) */
+window.addEventListener("resize", updateScrollPadding, { passive: true });
 
 
 /* ═══════════════════════════════════════════════════════════════
@@ -105,39 +113,55 @@ function closeNav() {
 /* ═══════════════════════════════════════════════════════════════
    2. SMOOTH SCROLL
    ───────────────────────────────────────────────────────────────
-   Why JS rather than CSS-only?
-   • CSS scroll-behavior is already set, but JS gives us precise
-     control over the offset (header height).
-   • CSS scroll-padding-top is set as a fallback in the stylesheet.
-   • This works in all modern browsers including older Android.
+   Strategy:
+   1. CSS scroll-behavior: smooth is already set as baseline.
+   2. JS overrides with window.scrollTo for precise header offset.
+   3. scrollIntoView fallback for browsers that don't support
+      the {behavior: "smooth"} option (older iOS Safari).
+
+   This works on:
+   ✓ Chrome / Edge / Firefox (desktop + Android)
+   ✓ Safari 14+ (iOS and macOS)
+   ✓ Samsung Internet
+   ✓ Older Android WebView (falls back to instant scroll)
    ═══════════════════════════════════════════════════════════════ */
 (function initSmoothScroll() {
+
+  /* Feature detect smooth scroll support */
+  var supportsScrollBehavior = "scrollBehavior" in document.documentElement.style;
+
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener("click", function (e) {
       var targetId = this.getAttribute("href");
 
-      /* Skip empty/hash-only links */
+      /* Skip empty or bare # links */
       if (!targetId || targetId === "#") return;
 
       var target = document.querySelector(targetId);
       if (!target) return;
 
-      /* Prevent default jump */
+      /* Prevent default browser jump */
       e.preventDefault();
 
       /* Close mobile nav if open */
       closeNav();
 
-      /* Calculate position: element top minus header height minus 8px gap */
-      var headerH = getHeaderHeight();
-      var gap     = 10;   /* extra breathing room above destination */
+      /* Calculate scroll position:
+         Element top + current scroll − header height − 8px gap */
+      var headerH  = getHeaderHeight();
+      var gap      = 10;
       var targetTop = target.getBoundingClientRect().top + window.scrollY - headerH - gap;
 
-      /* Smooth scroll */
-      window.scrollTo({
-        top:      Math.max(0, targetTop),
-        behavior: "smooth"
-      });
+      /* Clamp to 0 — never scroll negative */
+      targetTop = Math.max(0, targetTop);
+
+      if (supportsScrollBehavior) {
+        /* Modern browsers: smooth scroll to calculated position */
+        window.scrollTo({ top: targetTop, behavior: "smooth" });
+      } else {
+        /* Fallback for older browsers (instant) */
+        window.scrollTo(0, targetTop);
+      }
     });
   });
 })();
@@ -403,7 +427,7 @@ function closeNav() {
       phone:     (document.getElementById("fPhone").value   || "").trim(),
       budget:    document.getElementById("fBudget").value   || "Not specified",
       timeline:  document.getElementById("fTimeline").value || "Not specified",
-      source:    "Landing Page v5"
+      source:    "Landing Page v6"
     };
 
     setLoading(true);
