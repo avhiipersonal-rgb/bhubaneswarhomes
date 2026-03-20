@@ -16,7 +16,7 @@
 /* ── Google Sheets webhook URL ──
    Replace this with your Google Apps Script deployment URL.
    The form runs in demo mode until you replace it.          */
-const WEBHOOK_URL = "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwPW1eQN1-25YlcgcNC-BbjA9Vvm6Hvsd758w8wguRQTmz09N0DyQdv1oiAkJW_PLnG/exec";
 
 
 /* ═══════════════════════════════════════════════════════════════
