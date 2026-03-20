@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ═══════════════════════════════════════════════════
+       SEO & META
+  ════════════════════════════════════════════════════ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Find verified 2BHK & 3BHK flats in Bhubaneswar under ₹50L–₹1Cr. No brokerage, free site visit, genuine guidance. Call us today." />
+  <meta name="keywords"
+    content="flats Bhubaneswar, 2BHK 3BHK Bhubaneswar, buy flat Odisha, no brokerage flats, affordable homes Bhubaneswar" />
+  <meta name="author" content="BhubaneswarHomes" />
+  <meta property="og:title"       content="Flats in Bhubaneswar Under ₹50L–₹1Cr | No Brokerage" />
+  <meta property="og:description" content="We help you find the best home in your budget. Free site visit. Genuine guidance." />
+  <meta property="og:type"        content="website" />
+  <title>Flats in Bhubaneswar | No Brokerage · Free Site Visit</title>
+
+  <!-- Fonts: Poppins (headings) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════
+       ① STICKY HEADER
+       Logo · Nav · Call button always visible
+  ════════════════════════════════════════════════════ -->
+  <header class="header" id="header">
+    <div class="wrap header-inner">
+
+      <!-- Logo -->
+      <a href="#" class="logo" aria-label="BhubaneswarHomes – back to top">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 22" width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 1L1 9.5V21h7v-7h8v7h7V9.5L12 1z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="logo-name">BhubaneswarHomes</span>
+      </a>
+
+      <!-- Desktop navigation -->
+      <nav class="desk-nav" aria-label="Site navigation">
+        <a href="#quick-select">Find Flats</a>
+        <a href="#properties">Properties</a>
+        <a href="#form">Get Deals</a>
+      </nav>
+
+      <!-- Right actions -->
+      <div class="header-actions">
+        <a href="tel:+919999999999" class="btn btn-call" aria-label="Call us now">
+          <!-- Phone icon -->
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+            stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07
+              A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 1.14 2 2 0 012.18
+              1h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91
+              8.15a16 16 0 006.94 6.94l1.51-1.52a2 2 0 012.11-.45c.91.34
+              1.85.57 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          <span>Call Now</span>
+        </a>
+
+        <!-- Mobile hamburger -->
+        <button class="hamburger" id="hamburger"
+          aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileNav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile dropdown nav -->
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" hidden>
+      <a href="#quick-select" onclick="closeNav()">🔍 Find Flats</a>
+      <a href="#properties"   onclick="closeNav()">🏠 Properties</a>
+      <a href="#form"         onclick="closeNav()">📋 Get Best Deals</a>
+      <a href="tel:+919999999999" class="mobile-call" onclick="closeNav()">
+        📞 Call Now — Free
+      </a>
+    </nav>
+  </header>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       ② HERO SECTION
+       Deep green · Headline · Trust row · 2 CTAs
+  ════════════════════════════════════════════════════ -->
+  <section class="hero" id="hero" aria-label="Hero section">
+    <div class="wrap hero-inner">
+
+      <!-- Eyebrow tag -->
+      <div class="eyebrow" aria-label="Location">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        Bhubaneswar, Odisha
+      </div>
+
+      <!-- Main headline -->
+      <h1 class="hero-h1">
+        Flats in Bhubaneswar<br />
+        <span class="hero-range">Under ₹50L – ₹1Cr</span>
+      </h1>
+
+      <!-- Sub-headline -->
+      <p class="hero-sub">
+        We help you find the best home in your budget —<br class="br-desk" />
+        with <strong>no brokerage</strong> and <strong>free guidance</strong>.
+      </p>
+
+      <!-- ── Trust strip ── -->
+      <ul class="trust-strip" aria-label="Key benefits">
+        <li class="trust-item">
+          <span class="trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="none"
+              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M10 1L12.39 6.26L18 7.27L14 11.14L15 17L10 14.27
+                5 17L6 11.14L2 7.27L7.61 6.26L10 1z"
+                stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span><b>No Brokerage</b><small>Zero charges to you</small></span>
+        </li>
+        <li class="trust-sep" aria-hidden="true"></li>
+        <li class="trust-item">
+          <span class="trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="none"
+              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M10 6v4l3 2" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span><b>Free Site Visit</b><small>We take you there</small></span>
+        </li>
+        <li class="trust-sep" aria-hidden="true"></li>
+        <li class="trust-item">
+          <span class="trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20" width="18" height="18" fill="none"
+              xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M17 3.5C15.5 2 13.5 1 11 1c-4.42 0-8 3.58-8 8
+                0 1.41.37 2.74 1.01 3.89L2 19l6.22-2c1.1.6 2.37.95
+                3.78.95 4.42 0 8-3.58 8-8 0-2.3-.93-4.39-2.44-5.9
+                -.19-.18-.38-.35-.56-.5z"
+                stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span><b>Genuine Help</b><small>No pressure, ever</small></span>
+        </li>
+      </ul>
+
+      <!-- CTAs -->
+      <div class="hero-ctas" role="group" aria-label="Primary actions">
+        <a href="tel:+919999999999" class="btn btn-orange btn-lg">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07
+              A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 1.14 2 2 0 012.18
+              1h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11
+              L6.91 8.15a16 16 0 006.94 6.94l1.51-1.52a2 2 0 012.11-.45
+              c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Call Now — It's Free
+        </a>
+        <a href="#form" class="btn btn-outline-white btn-lg">
+          Book Free Site Visit
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Response time microcopy -->
+      <p class="hero-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        We usually call back within 30 minutes
+      </p>
+
+    </div><!-- /hero-inner -->
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       ③ QUICK SELECT
+       2-step: BHK → Budget → scroll to form
+  ════════════════════════════════════════════════════ -->
+  <section class="section qs-section" id="quick-select">
+    <div class="wrap">
+
+      <div class="qs-header">
+        <h2>Tell Us What You Need</h2>
+        <p>Tap your choice — we'll find matching options for you right away.</p>
+      </div>
+
+      <!-- Step 1: BHK -->
+      <div class="qs-group" role="group" aria-labelledby="bhk-label">
+        <p class="qs-label" id="bhk-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
+          </svg>
+          Select bedrooms
+        </p>
+        <div class="pill-group" id="bhkGroup">
+          <button class="pill" data-group="bhk" data-value="2BHK">2 BHK</button>
+          <button class="pill" data-group="bhk" data-value="3BHK">3 BHK</button>
+          <button class="pill" data-group="bhk" data-value="Any" >Any</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Budget -->
+      <div class="qs-group" role="group" aria-labelledby="budget-label">
+        <p class="qs-label" id="budget-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+          </svg>
+          Select budget
+        </p>
+        <div class="pill-group" id="budgetGroup">
+          <button class="pill" data-group="budget" data-value="30-50L">₹30L – ₹50L</button>
+          <button class="pill" data-group="budget" data-value="50-80L">₹50L – ₹80L</button>
+          <button class="pill" data-group="budget" data-value="80L+"  >₹80L+</button>
+        </div>
+      </div>
+
+      <!-- Dynamic result card — appears after both are selected -->
+      <div class="qs-result" id="qsResult" hidden aria-live="polite">
+        <p id="qsResultText"></p>
+        <a href="#form" class="btn btn-orange" id="qsResultBtn">
+          Show Matching Flats
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       ④ PROPERTY CARDS
+       3 verified listings — clean cards
+  ════════════════════════════════════════════════════ -->
+  <section class="section props-section" id="properties">
+    <div class="wrap">
+
+      <div class="section-hd">
+        <span class="section-tag" aria-hidden="true">Verified Listings</span>
+        <h2>Properties We're Currently Working With</h2>
+        <p>These are real projects we have personally verified. More options available — call to know.</p>
+      </div>
+
+      <div class="cards-grid">
+
+        <!-- Card 1 -->
+        <article class="prop-card" aria-label="Sunrise Residency property">
+          <div class="card-img">
+            <img
+              src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=75"
+              alt="Sunrise Residency – 3 BHK apartments in Patia, Bhubaneswar"
+              loading="lazy" width="600" height="340"
+            />
+            <span class="card-badge badge-ready">Ready to Move</span>
+          </div>
+          <div class="card-info">
+            <h3>Sunrise Residency</h3>
+            <p class="card-price">₹65L – ₹85L</p>
+            <p class="card-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              Patia, Bhubaneswar
+            </p>
+            <div class="card-tags">
+              <span class="tag">3 BHK</span>
+              <span class="tag">1450 sq.ft</span>
+              <span class="tag tag-alert">⚡ Limited Units</span>
+            </div>
+            <a href="#form" class="btn btn-card">Get Price Details →</a>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="prop-card" aria-label="Green Valley Apartments property">
+          <div class="card-img">
+            <img
+              src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=75"
+              alt="Green Valley Apartments – 2 BHK flats in Khandagiri, Bhubaneswar"
+              loading="lazy" width="600" height="340"
+            />
+            <span class="card-badge badge-popular">Most Popular</span>
+          </div>
+          <div class="card-info">
+            <h3>Green Valley Apartments</h3>
+            <p class="card-price">₹48L – ₹58L</p>
+            <p class="card-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              Khandagiri, Bhubaneswar
+            </p>
+            <div class="card-tags">
+              <span class="tag">2 BHK</span>
+              <span class="tag">1100 sq.ft</span>
+              <span class="tag tag-info">Under Construction</span>
+            </div>
+            <a href="#form" class="btn btn-card">Get Price Details →</a>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="prop-card" aria-label="Orchid Heights property">
+          <div class="card-img">
+            <img
+              src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=75"
+              alt="Orchid Heights – 3 BHK spacious flats in Nayapalli, Bhubaneswar"
+              loading="lazy" width="600" height="340"
+            />
+            <span class="card-badge badge-value">Best Value</span>
+          </div>
+          <div class="card-info">
+            <h3>Orchid Heights</h3>
+            <p class="card-price">₹72L – ₹95L</p>
+            <p class="card-loc">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              Nayapalli, Bhubaneswar
+            </p>
+            <div class="card-tags">
+              <span class="tag">3 BHK</span>
+              <span class="tag">1600 sq.ft</span>
+              <span class="tag tag-ready">Ready to Move</span>
+            </div>
+            <a href="#form" class="btn btn-card">Get Price Details →</a>
+          </div>
+        </article>
+
+      </div><!-- /cards-grid -->
+
+      <p class="cards-note">
+        We have many more options across Bhubaneswar.
+        <a href="#form" class="text-link">Share your budget and we'll show you the right ones.</a>
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       ⑤ LEAD CAPTURE FORM
+       Simple, airy, low-friction
+  ════════════════════════════════════════════════════ -->
+  <section class="section form-section" id="form">
+    <div class="wrap form-layout">
+
+      <!-- Left: pitch -->
+      <div class="form-pitch">
+        <span class="section-tag" aria-hidden="true">Free &amp; No Obligations</span>
+        <h2>Get Best Flats<br />in Your Budget</h2>
+        <p class="pitch-sub">
+          Fill this short form. We will call you and suggest the best options that match exactly what you're looking for.
+        </p>
+
+        <ul class="pitch-points" aria-label="What happens after you submit">
+          <li>
+            <span class="pp-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07
+                  A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 1.14 2 2 0 012.18
+                  1h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11
+                  L6.91 8.15a16 16 0 006.94 6.94l1.51-1.52a2 2 0 012.11-.45
+                  c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+            </span>
+            We call you within <strong>2 hours</strong>
+          </li>
+          <li>
+            <span class="pp-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+              </svg>
+            </span>
+            We share <strong>shortlisted flats</strong> matching your budget
+          </li>
+          <li>
+            <span class="pp-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v4l3 3"/>
+              </svg>
+            </span>
+            We arrange a <strong>free site visit</strong> at your convenience
+          </li>
+          <li>
+            <span class="pp-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none"
+                stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/>
+              </svg>
+            </span>
+            We check your <strong>home loan eligibility</strong> — free
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: form card -->
+      <div class="form-card" role="main">
+
+        <!-- ── Success state ── -->
+        <div class="form-success" id="formSuccess" hidden>
+          <div class="success-check" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none"
+              stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <h3>Thank You!</h3>
+          <p>Our advisor will call you within <strong>2 hours</strong>. Keep your phone nearby.</p>
+          <p class="success-alt">
+            Can't wait?
+            <a href="https://wa.me/919999999999?text=Hi%2C%20I%20just%20filled%20your%20form.%20Looking%20for%20flats%20in%20Bhubaneswar."
+              target="_blank" rel="noopener noreferrer">WhatsApp us now →</a>
+          </p>
+        </div>
+
+        <!-- ── The form ── -->
+        <form id="leadForm" novalidate>
+
+          <!-- Name -->
+          <div class="fg">
+            <label for="fName">
+              Your Name
+              <span class="req" aria-label="required">*</span>
+            </label>
+            <input type="text" id="fName" name="name"
+              placeholder="e.g., Ramesh Kumar"
+              required autocomplete="name"
+              aria-required="true" aria-describedby="fNameErr" />
+            <span class="ferr" id="fNameErr" role="alert">Please enter your name.</span>
+          </div>
+
+          <!-- Phone -->
+          <div class="fg">
+            <label for="fPhone">
+              Phone Number
+              <span class="req" aria-label="required">*</span>
+              <span class="label-hint">We will call you on this number</span>
+            </label>
+            <input type="tel" id="fPhone" name="phone"
+              placeholder="10-digit mobile number"
+              required maxlength="10" inputmode="numeric"
+              autocomplete="tel"
+              aria-required="true" aria-describedby="fPhoneErr" />
+            <span class="ferr" id="fPhoneErr" role="alert">Enter a valid 10-digit mobile number.</span>
+          </div>
+
+          <!-- Budget -->
+          <div class="fg">
+            <label for="fBudget">Your Budget</label>
+            <select id="fBudget" name="budget" aria-describedby="fBudgetHint">
+              <option value="" disabled selected>Select budget range</option>
+              <option value="Under 30L">Under ₹30 Lakhs</option>
+              <option value="30-50L">₹30L – ₹50 Lakhs</option>
+              <option value="50-80L">₹50L – ₹80 Lakhs</option>
+              <option value="80L-1Cr">₹80L – ₹1 Crore</option>
+              <option value="Above 1Cr">Above ₹1 Crore</option>
+            </select>
+            <span class="fhint" id="fBudgetHint">Not sure? We'll help you on the call.</span>
+          </div>
+
+          <!-- Timeline -->
+          <div class="fg">
+            <label for="fTimeline">When Do You Want to Buy?</label>
+            <select id="fTimeline" name="timeline">
+              <option value="" disabled selected>Select your timeline</option>
+              <option value="Immediately">As soon as possible</option>
+              <option value="1-3 months">Within 1–3 months</option>
+              <option value="3-6 months">Within 3–6 months</option>
+              <option value="Just exploring">Just exploring for now</option>
+            </select>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn btn-orange btn-submit" id="submitBtn">
+            <span id="btnLabel">Get Best Deals</span>
+            <span id="btnLoader" class="btn-loader hidden" role="status" aria-label="Submitting">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+                stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" aria-hidden="true">
+                <line x1="12" y1="2" x2="12" y2="6"/>
+                <line x1="12" y1="18" x2="12" y2="22"/>
+                <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/>
+                <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/>
+                <line x1="2" y1="12" x2="6" y2="12"/>
+                <line x1="18" y1="12" x2="22" y2="12"/>
+                <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/>
+                <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/>
+              </svg>
+              Submitting…
+            </span>
+          </button>
+
+          <p class="form-note">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none"
+              stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0110 0v4"/>
+            </svg>
+            Your number is private. We will never spam you.
+          </p>
+
+        </form>
+      </div><!-- /form-card -->
+
+    </div><!-- /form-layout -->
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       ⑥ FINAL CTA
+       Catch fence-sitters. Two action paths.
+  ════════════════════════════════════════════════════ -->
+  <section class="final-cta" aria-label="Final call to action">
+    <div class="wrap final-inner">
+      <h2>Still Confused?<br class="br-mob" /> Talk to Us Now.</h2>
+      <p>We're real people in Bhubaneswar. Ask us anything — we're happy to help.</p>
+      <div class="final-btns" role="group" aria-label="Contact options">
+        <a href="tel:+919999999999" class="btn btn-final-call">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+            stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07
+              A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 1.14 2 2 0 012.18
+              1h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11
+              L6.91 8.15a16 16 0 006.94 6.94l1.51-1.52a2 2 0 012.11-.45
+              c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          Call Now
+        </a>
+        <a href="https://wa.me/919999999999?text=Hi%2C%20I%27m%20interested%20in%20buying%20a%20flat%20in%20Bhubaneswar.%20Can%20you%20help%3F"
+          target="_blank" rel="noopener noreferrer"
+          class="btn btn-wa">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15
+              -.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463
+              -2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606
+              .134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371
+              -.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51
+              -.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016
+              -1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487
+              .709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719
+              2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347
+              m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998
+              -3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888
+              -9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003
+              5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495
+              0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654
+              a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821
+              11.821 0 00-3.48-8.413z"/>
+          </svg>
+          WhatsApp Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       FOOTER — minimal
+  ════════════════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="wrap footer-inner">
+      <a href="#" class="logo footer-logo" aria-label="BhubaneswarHomes home">
+        <span class="logo-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 22" width="20" height="20" fill="none"
+            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 1L1 9.5V21h7v-7h8v7h7V9.5L12 1z"
+              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="logo-name">BhubaneswarHomes</span>
+      </a>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="#properties">Properties</a>
+        <a href="#form">Get Deals</a>
+        <a href="tel:+919999999999">Call Us</a>
+      </nav>
+      <p class="footer-copy">© 2025 BhubaneswarHomes · Helping buyers in Bhubaneswar, Odisha</p>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════
+       FLOATING WHATSAPP BUTTON
+       Fixed bottom-right — always accessible
+  ════════════════════════════════════════════════════ -->
+  <a href="https://wa.me/919999999999?text=Hi%2C%20I%27m%20interested%20in%20buying%20a%20flat%20in%20Bhubaneswar.%20Can%20you%20help%3F"
+    class="wa-fab" target="_blank" rel="noopener noreferrer"
+    aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="white" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148
+        -.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15
+        -1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018
+        -.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099
+        -.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487
+        -.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297
+        -1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2
+        5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571
+        -.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272
+        -.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214
+        -3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436
+        -9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893
+        6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0
+        0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588
+        5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0
+        11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="wa-ring" aria-hidden="true"></span>
+  </a>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
