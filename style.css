@@ -521,6 +521,291 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 
 /* ──────────────────────────────────────────────────────────────
+   5b. HEADER PHONE NUMBER (new in v5)
+   Visible phone number in header desktop — key trust signal.
+────────────────────────────────────────────────────────────── */
+.header-phone {
+  display: none;  /* hidden on mobile — space is too tight */
+  align-items: center;
+  gap: 6px;
+  font-size: .84rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  letter-spacing: .01em;
+  transition: color .18s;
+}
+.header-phone:hover { color: var(--green); }
+.header-phone svg { color: var(--green); flex-shrink: 0; }
+
+@media (min-width: 900px) {
+  .header-phone { display: flex; }
+}
+
+/* Mobile nav phone number display */
+.mobile-nav-phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  border-bottom: 1px solid var(--grey-100);
+}
+.mobile-nav-phone svg { color: var(--green); flex-shrink: 0; }
+
+
+/* ──────────────────────────────────────────────────────────────
+   5c. HOW IT WORKS SECTION (new in v5)
+────────────────────────────────────────────────────────────── */
+.how-section {
+  background: var(--white);
+  border-bottom: 1px solid var(--grey-100);
+}
+
+/* 3-column step grid */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-bottom: 44px;
+}
+
+/* Individual step card */
+.step-card {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 28px 24px;
+  background: var(--grey-50);
+  border: 1px solid var(--grey-100);
+  border-radius: var(--r-lg);
+  transition: var(--t);
+}
+.step-card:hover {
+  border-color: rgba(31,110,103,.2);
+  box-shadow: var(--sh-card);
+}
+
+/* Step number badge */
+.step-num {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background: var(--green);
+  color: var(--white);
+  border-radius: 50%;
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.step-body h3 {
+  font-family: var(--font-head);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--grey-900);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.step-body p {
+  font-size: .88rem;
+  color: var(--grey-600);
+  line-height: 1.65;
+}
+
+/* Bottom CTA of the How section */
+.how-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 24px 28px;
+  background: var(--green-xlight);
+  border: 1.5px solid rgba(31,110,103,.16);
+  border-radius: var(--r-lg);
+}
+.how-note p {
+  font-size: .95rem;
+  color: var(--grey-700);
+  line-height: 1.6;
+  max-width: 520px;
+}
+.how-note .btn-orange {
+  flex-shrink: 0;
+  padding: 14px 24px;
+  font-size: .93rem;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   5d. TRUST SECTION (new in v5)
+   Dark background to visually separate trust from form section.
+────────────────────────────────────────────────────────────── */
+.trust-section {
+  background: var(--green-mid);
+}
+.trust-section .section-hd h2 { color: var(--white); }
+.trust-section .section-tag {
+  color: #9EF0D8;
+  background: rgba(158,240,216,.1);
+  border-color: rgba(158,240,216,.2);
+}
+.trust-section .section-hd p { color: rgba(255,255,255,.7); max-width: 540px; }
+
+/* 2×2 trust blocks grid */
+.trust-blocks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.trust-block {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--r-lg);
+  padding: 26px 22px;
+  transition: var(--t);
+}
+.trust-block:hover {
+  background: rgba(255,255,255,.11);
+  border-color: rgba(158,240,216,.25);
+}
+
+.t-ico {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+.t-content h3 {
+  font-family: var(--font-head);
+  font-size: .97rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 7px;
+  line-height: 1.3;
+}
+.t-content p {
+  font-size: .86rem;
+  color: rgba(255,255,255,.62);
+  line-height: 1.65;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   5e. CARDS FOOTER — phone + more areas (new in v5)
+────────────────────────────────────────────────────────────── */
+.cards-footer {
+  text-align: center;
+  margin-top: 4px;
+}
+.cards-footer p {
+  font-size: .9rem;
+  color: var(--grey-600);
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+.cards-direct {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: .9rem !important;
+  color: var(--grey-600) !important;
+}
+
+/* Inline call link (phone number visible as a link in cards section) */
+.inline-call {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  color: var(--green-dark);
+  border-bottom: 1px solid rgba(31,110,103,.3);
+  transition: var(--t);
+  font-size: .9rem;
+}
+.inline-call:hover { color: var(--green); border-color: var(--green); }
+.inline-call svg { flex-shrink: 0; }
+
+
+/* ──────────────────────────────────────────────────────────────
+   5f. PITCH ALT CONTACT — direct call option next to form (new v5)
+────────────────────────────────────────────────────────────── */
+.pitch-alt-contact {
+  margin-top: 28px;
+  padding: 16px 18px;
+  background: var(--green-xlight);
+  border: 1px solid rgba(31,110,103,.14);
+  border-radius: var(--r-md);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pitch-alt-contact p {
+  font-size: .84rem;
+  color: var(--grey-600);
+  margin: 0;
+  flex-shrink: 0;
+}
+.pitch-call-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  border-bottom: 1.5px solid rgba(31,110,103,.3);
+  transition: var(--t);
+}
+.pitch-call-link:hover { color: var(--green); border-color: var(--green); }
+.pitch-call-link svg { flex-shrink: 0; color: var(--green); }
+.pitch-hours {
+  font-size: .78rem;
+  color: var(--grey-400);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+
+/* ──────────────────────────────────────────────────────────────
+   5g. FINAL PHONE display in Final CTA (new v5)
+────────────────────────────────────────────────────────────── */
+.final-phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  font-size: .9rem;
+}
+.final-phone a {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: .02em;
+  transition: opacity .18s;
+}
+.final-phone a:hover { opacity: .85; }
+.final-phone span {
+  font-size: .82rem;
+  color: rgba(255,255,255,.5);
+}
+
+
+/* ──────────────────────────────────────────────────────────────
    6. HERO SECTION
 ────────────────────────────────────────────────────────────── */
 .hero {
@@ -1314,6 +1599,15 @@ button { cursor: pointer; font-family: var(--font-body); }
   .hero-inner { max-width: 100%; }
 
   /* Quick-result banner already column in v4 */
+
+  /* Steps grid: single column on tablet */
+  .steps-grid            { grid-template-columns: 1fr; gap: 14px; }
+
+  /* Trust blocks: single column on tablet */
+  .trust-blocks          { grid-template-columns: 1fr; gap: 14px; }
+
+  /* How note: stack */
+  .how-note              { flex-direction: column; align-items: flex-start; }
 
   /* Section vertical padding */
   .section               { padding: var(--section-v-tab) 0; }
