@@ -215,9 +215,9 @@ function closeNav() {
     var pStr = budgetLabel[state.budget] || state.budget;
 
     resultText.innerHTML =
-      "Great choice! We have <strong>" + bStr + "</strong> flats " +
-      "in the <strong>" + pStr + "</strong> range. " +
-      "Fill the form below and we'll call you with the best options.";
+      "Good choice! We have <strong>" + bStr + "</strong> flats in the " +
+      "<strong>" + pStr + "</strong> range in Bhubaneswar. " +
+      "Tell us your details below — we'll call you with the best matching options within 15 minutes.";
 
     /* Show the banner */
     resultBox.removeAttribute("hidden");
@@ -403,7 +403,7 @@ function closeNav() {
       phone:     (document.getElementById("fPhone").value   || "").trim(),
       budget:    document.getElementById("fBudget").value   || "Not specified",
       timeline:  document.getElementById("fTimeline").value || "Not specified",
-      source:    "Landing Page v4"
+      source:    "Landing Page v5"
     };
 
     setLoading(true);
