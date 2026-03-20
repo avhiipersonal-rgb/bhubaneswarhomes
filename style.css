@@ -1,32 +1,57 @@
 /* ═══════════════════════════════════════════════════════════════
-   BHUBANESWAR HOMES — v4 REFINED STYLESHEET
+   BHUBANESWAR HOMES — v6 MOBILE-OPTIMISED STYLESHEET
    ───────────────────────────────────────────────────────────────
-   WHAT CHANGED IN v4 vs v3
-   ─────────────────────────
-   ① Typography   → Hero H1 +14% larger. Sub-headline more readable.
-                    Body line-height 1.75. Better heading scale system.
-   ② Buttons      → "Show Matching Flats" fixed: more padding, full-width
-                    on mobile, clear separation, stronger hover.
-                    All buttons: min-height 50px. Larger padding.
-   ③ Spacing      → Section vertical padding increased. More breathing
-                    room between every block. Consistent 24px gutters.
-   ④ Form         → Inputs taller (48px min). Labels more readable.
-                    Field gaps increased. Better focus ring.
-   ⑤ Responsive   → Improved tablet (900px) and mobile (480px) breakpoints.
-                    Every button full-width on small screens.
-   ⑥ Focus states → Visible focus rings on all keyboard targets.
-   ⑦ Nav          → Item spacing improved. Logo slightly larger.
+   WHAT CHANGED IN v6 (Mobile Optimisation Release)
+   ─────────────────────────────────────────────────
+   ① TYPOGRAPHY SYSTEM (fully mobile-first)
+      • Hero H1:     22px mobile → scales to 52px desktop
+                     Was: 38px minimum (too large on 320px)
+      • Subheadline: 14px mobile → 18px desktop
+      • Section H2:  20px mobile → 36px desktop
+      • Body text:   14px base → 15px desktop
+      • Buttons:     15px mobile (all sizes)
+      • Labels:      13px mobile → 14px desktop
+      • Helper text: 12px mobile → 13px desktop
+
+   ② BREAKPOINTS (5-tier system, mobile-first)
+      • 320px  — Absolute minimum. No horizontal scroll.
+      • 480px  — Small phone (new breakpoint added)
+      • 580px  — Large phone
+      • 768px  — Small tablet (new breakpoint added)
+      • 900px  — Tablet / nav toggle point
+      • 1024px — Large tablet (new breakpoint added)
+      • 1200px — Desktop
+
+   ③ OVERFLOW PREVENTION
+      • html, body: overflow-x hidden
+      • All images: max-width 100%
+      • Eyebrow: white-space wrap, word-break break-word
+      • No element can cause horizontal scroll
+
+   ④ FORM UX
+      • Field gap: 16px mobile, 20px desktop
+      • Input height: 48px minimum (easy tap)
+      • Font inside inputs: 16px (prevents iOS zoom)
+      • All form buttons: full-width on mobile
+
+   ⑤ SMOOTH SCROLLING
+      • CSS scroll-behavior: smooth (all browsers)
+      • scroll-padding-top: dynamic header offset
+      • JS scrollIntoView used as progressive enhancement
+
+   ⑥ HERO MOBILE FIX
+      • min-height: auto on mobile — hero no longer
+        full-viewport, allowing form to be closer
+      • Proper padding so content isn't cramped
    ═══════════════════════════════════════════════════════════════ */
 
 
-/* ──────────────────────────────────────────────────────────────
+/* ══════════════════════════════════════════════════════════════
    1. DESIGN TOKENS
-   No colour changes from v3. All spacing/type improvements
-   are isolated to their own tokens below.
-────────────────────────────────────────────────────────────── */
+══════════════════════════════════════════════════════════════ */
 :root {
 
-  /* ── Brand colours (unchanged) ── */
+  /* ── Brand colours ── */
   --green:          #1F6E67;
   --green-dark:     #185850;
   --green-mid:      #175048;
@@ -35,7 +60,6 @@
 
   --orange:         #F97316;
   --orange-dark:    #EA6B0E;
-  --orange-light:   #FFF4EC;
 
   /* ── Neutrals ── */
   --white:          #FFFFFF;
@@ -57,18 +81,16 @@
 
   /* ── Layout ── */
   --max-w:     1100px;
-  --gutter:    24px;   /* v4: was 20px — more comfortable edge breathing */
+  --gutter:    16px;   /* v6: Mobile-first — starts at 16px */
 
-  /* ── Section vertical rhythm (v4: more generous) ── */
-  --section-v:       96px;   /* desktop sections */
-  --section-v-tab:   72px;   /* tablet */
-  --section-v-mob:   56px;   /* mobile */
+  /* ── Section vertical rhythm (mobile-first) ── */
+  --section-v: 48px;   /* Mobile base — tighter */
 
   /* ── Radii ── */
   --r-sm:   6px;
-  --r-md:   12px;    /* v4: was 10px — slightly softer corners */
-  --r-lg:   18px;    /* v4: was 16px */
-  --r-xl:   26px;    /* v4: was 24px */
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   22px;
   --r-pill: 100px;
 
   /* ── Shadows ── */
@@ -76,44 +98,61 @@
   --sh-lift:   0 4px 24px rgba(0,0,0,.10), 0 1px 4px rgba(0,0,0,.05);
   --sh-input:  0 0 0 3px rgba(31,110,103,.16);
   --sh-orange: 0 4px 16px rgba(249,115,22,.36);
-  --sh-focus:  0 0 0 3px rgba(249,115,22,.30);  /* focus ring for orange btns */
+  --sh-focus:  0 0 0 3px rgba(249,115,22,.30);
 
-  /* ── Transition ── */
+  /* ── Transitions — fast and smooth ── */
   --t:      all .22s cubic-bezier(.4,0,.2,1);
-  --t-slow: all .35s cubic-bezier(.4,0,.2,1);
 
-  /* ── Button minimum height (accessibility / touch) ── */
-  --btn-h: 50px;   /* minimum 50px — easy thumb tap */
+  /* ── Touch targets ── */
+  --btn-h: 48px;   /* WCAG 2.5.5: minimum 44px, use 48px */
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   2. RESET & BASE
-────────────────────────────────────────────────────────────── */
-*, *::before, *::after {
+/* ══════════════════════════════════════════════════════════════
+   2. RESET & BASE (MOBILE-FIRST)
+══════════════════════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* Smooth scrolling — CSS method */
+/* ── SMOOTH SCROLLING (CSS method — works everywhere) ──
+   scroll-padding-top accounts for the fixed header.
+   JS provides the same offset dynamically (see script.js).   */
 html {
   scroll-behavior: smooth;
-  /* Offset fixed header so anchors don't hide under it */
-  scroll-padding-top: 72px;
+  scroll-padding-top: 64px;  /* matches header height on mobile */
+
+  /* OVERFLOW FIX: prevents horizontal scroll on any screen */
+  overflow-x: hidden;
 }
 
+/* ── BASE BODY — Mobile-first font size ── */
 body {
   font-family: var(--font-body);
-  font-size: 16px;
+
+  /* v6: 14px base on mobile — within the 13-15px guideline */
+  font-size: 14px;
+  line-height: 1.55;  /* v6: 1.3–1.5 recommended range on mobile */
+
   color: var(--grey-900);
   background: var(--white);
-  line-height: 1.75;    /* v4: was 1.6 — much more readable body text */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Prevents horizontal scroll caused by child overflow */
+  overflow-x: hidden;
 }
 
-img    { display: block; max-width: 100%; height: auto; }
+/* ── Global rules ── */
+img    {
+  display: block;
+  max-width: 100%;  /* CRITICAL: prevents images causing horizontal scroll */
+  height: auto;
+}
 a      { text-decoration: none; color: inherit; }
 ul     { list-style: none; }
 button { cursor: pointer; font-family: var(--font-body); }
@@ -124,67 +163,71 @@ button { cursor: pointer; font-family: var(--font-body); }
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 0 var(--gutter);
+
+  /* Prevents child content overflowing wrapper */
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
-/* ── Section baseline ── */
+/* ── Section baseline — mobile padding ── */
 .section { padding: var(--section-v) 0; }
 
-/* ── Global focus ring ──
-   Every interactive element gets a clearly visible focus outline
-   for keyboard users. This never overrides colour but always
-   adds an accessible ring.                                        */
+/* ── FOCUS RING — visible for keyboard and screen reader users ── */
 :focus-visible {
   outline: 2px solid var(--orange);
   outline-offset: 3px;
 }
-/* Remove focus ring for mouse clicks, keep for keyboard */
 :focus:not(:focus-visible) { outline: none; }
 
+/* ── Utility ── */
+.hidden { display: none !important; }
+.br-desk { display: none; }  /* shown only on larger screens */
+.br-mob  { display: none; }  /* shown only on mobile */
 
-/* ──────────────────────────────────────────────────────────────
+
+/* ══════════════════════════════════════════════════════════════
    3. SHARED SECTION HEADER
-────────────────────────────────────────────────────────────── */
+══════════════════════════════════════════════════════════════ */
 .section-hd {
   text-align: center;
-  margin-bottom: 52px;   /* v4: was 48px */
+  margin-bottom: 32px;  /* v6: was 52px — tighter on mobile */
 }
 
-/* Small label tag above headings */
+/* Small label pill above heading */
 .section-tag {
   display: inline-block;
-  font-family: var(--font-body);
-  font-size: 0.72rem;    /* v4: slightly more readable */
-  font-weight: 600;
-  letter-spacing: .1em;
+  font-size: 0.64rem;   /* v6: 10px on mobile — small but crisp */
+  font-weight: 700;
+  letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--green);
   background: var(--green-xlight);
   border: 1px solid rgba(31,110,103,.14);
-  padding: 5px 14px;     /* v4: was 4px 12px */
+  padding: 4px 12px;
   border-radius: var(--r-pill);
-  margin-bottom: 14px;   /* v4: was 12px */
+  margin-bottom: 10px;
 }
 
-/* Section headings — clear, Poppins bold */
+/* Section heading — mobile-first size */
 .section-hd h2 {
   font-family: var(--font-head);
-  font-size: clamp(1.7rem, 4vw, 2.35rem);
+  font-size: 1.25rem;   /* v6: 20px on mobile — within 22-26px guidance */
   font-weight: 700;
   color: var(--grey-900);
-  line-height: 1.25;     /* v4: was 1.2 — slightly more readable */
-  margin-bottom: 12px;   /* v4: was 10px */
+  line-height: 1.3;
+  margin-bottom: 8px;
 }
 
-/* Sub-text under section heading */
+/* Descriptive text under heading */
 .section-hd p {
-  font-size: 1rem;        /* v4: was .95rem */
+  font-size: 0.875rem;  /* v6: 14px on mobile — within 13-15px guidance */
   color: var(--grey-600);
-  max-width: 520px;
+  max-width: 480px;
   margin: 0 auto;
-  line-height: 1.65;
+  line-height: 1.55;
 }
 
-/* Inline text link style */
+/* Inline text link */
 .text-link {
   color: var(--green);
   font-weight: 600;
@@ -193,40 +236,40 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 .text-link:hover { border-color: var(--green); }
 
-/* Utility: hide element */
-.hidden { display: none !important; }
 
-
-/* ──────────────────────────────────────────────────────────────
+/* ══════════════════════════════════════════════════════════════
    4. BUTTON SYSTEM
-   ───────────────────────────────────────────────────────────────
-   Core rules:
-   • Orange ONLY for primary actions — never decorative
-   • All buttons min-height 50px for accessible tap targets
-   • Every button has a clear :hover AND :focus-visible state
-   • Transitions are fast (0.22s) — responsive, not flashy
-────────────────────────────────────────────────────────────── */
+   ─────────────────────────────────────────────────────────────
+   Rules:
+   • Orange ONLY on primary action buttons
+   • min-height: 48px on ALL buttons (touch target)
+   • Font size: 15px on mobile (within 14-16px guideline)
+   • Transitions: 0.22s (smooth, not flashy)
+   • Hover: darken + slight lift
+   • Active: lift removed (tactile response)
+══════════════════════════════════════════════════════════════ */
 
-/* Base shared properties */
+/* Base */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   font-family: var(--font-body);
+  font-size: 0.9375rem;  /* v6: 15px on mobile — within 14-16px guideline */
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.2;
   border: none;
   cursor: pointer;
   transition: var(--t);
   white-space: nowrap;
   border-radius: var(--r-md);
   min-height: var(--btn-h);
-  /* Letter-spacing for CTA clarity */
   letter-spacing: .01em;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* ── Orange CTA (primary actions only) ── */
+/* ── Orange — primary CTAs only ── */
 .btn-orange {
   background: var(--orange);
   color: var(--white);
@@ -234,21 +277,15 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 .btn-orange:hover {
   background: var(--orange-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(249,115,22,.42);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(249,115,22,.42);
 }
-.btn-orange:active { transform: translateY(0); }
-.btn-orange:focus-visible {
-  outline: 2px solid var(--orange-dark);
-  outline-offset: 3px;
-  box-shadow: var(--sh-focus);
-}
+.btn-orange:active { transform: translateY(0); box-shadow: var(--sh-orange); }
 
-/* ── Large modifier ── */
+/* ── Large variant — hero CTAs ── */
 .btn-lg {
-  padding: 16px 36px;   /* v4: was 15px 28px — noticeably more generous */
-  font-size: 1.02rem;
-  border-radius: var(--r-md);
+  padding: 14px 24px;    /* v6: was 16px 36px — tighter on mobile */
+  font-size: 0.9375rem;  /* v6: 15px — within 14-16px guideline */
 }
 
 /* ── Outlined white (hero secondary) ── */
@@ -260,42 +297,39 @@ button { cursor: pointer; font-family: var(--font-body); }
 .btn-outline-white:hover {
   background: rgba(255,255,255,.12);
   border-color: rgba(255,255,255,.9);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
-.btn-outline-white:focus-visible {
-  outline-color: #fff;
-}
+.btn-outline-white:active { transform: translateY(0); }
 
 /* ── Header call button ── */
 .btn-call {
-  padding: 11px 22px;    /* v4: was 9px 20px */
-  font-size: .9rem;      /* v4: was .875rem */
+  padding: 10px 18px;
+  font-size: 0.875rem;   /* v6: 14px */
   background: var(--orange);
   color: var(--white);
   border-radius: var(--r-pill);
   box-shadow: var(--sh-orange);
-  min-height: 40px;       /* header btn can be slightly shorter */
+  min-height: 40px;      /* header button can be slightly shorter */
 }
 .btn-call:hover {
   background: var(--orange-dark);
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(249,115,22,.42);
 }
 
-/* ── Card green button ── */
+/* ── Property card button ── */
 .btn-card {
   display: flex;
   width: 100%;
-  padding: 13px 16px;    /* v4: was 12px */
-  font-size: .9rem;       /* v4: slightly larger */
+  padding: 12px 14px;
+  font-size: 0.875rem;  /* v6: 14px */
   font-weight: 600;
   background: var(--green-xlight);
   color: var(--green-dark);
   border: 1.5px solid rgba(31,110,103,.16);
   border-radius: var(--r-md);
-  margin-top: 16px;      /* v4: was 14px */
+  margin-top: 14px;
   transition: var(--t);
-  min-height: 46px;
+  min-height: 44px;
 }
 .btn-card:hover {
   background: var(--green);
@@ -304,12 +338,13 @@ button { cursor: pointer; font-family: var(--font-body); }
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(31,110,103,.22);
 }
+.btn-card:active { transform: translateY(0); }
 
-/* ── Form submit ── */
+/* ── Form submit — always full-width ── */
 .btn-submit {
   width: 100%;
-  padding: 17px;         /* v4: was 15px — taller, easier to tap */
-  font-size: 1.05rem;    /* v4: slightly larger text */
+  padding: 15px;
+  font-size: 1rem;       /* v6: 16px — slightly larger to be the most prominent button */
   font-weight: 700;
   background: var(--orange);
   color: var(--white);
@@ -317,19 +352,20 @@ button { cursor: pointer; font-family: var(--font-body); }
   box-shadow: var(--sh-orange);
   min-height: var(--btn-h);
   letter-spacing: .02em;
+  transition: var(--t);
 }
 .btn-submit:hover:not(:disabled) {
   background: var(--orange-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(249,115,22,.42);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(249,115,22,.42);
 }
 .btn-submit:active:not(:disabled) { transform: translateY(0); }
 .btn-submit:disabled { opacity: .6; cursor: not-allowed; }
 
-/* ── Final CTA — call (white bg) ── */
+/* ── Final CTA buttons ── */
 .btn-final-call {
-  padding: 16px 36px;
-  font-size: 1rem;
+  padding: 14px 28px;
+  font-size: 0.9375rem;
   background: var(--white);
   color: var(--green-dark);
   border: 2px solid rgba(255,255,255,.5);
@@ -339,13 +375,12 @@ button { cursor: pointer; font-family: var(--font-body); }
 .btn-final-call:hover {
   background: rgba(255,255,255,.92);
   border-color: var(--white);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
-/* ── Final CTA — WhatsApp ── */
 .btn-wa {
-  padding: 16px 36px;
-  font-size: 1rem;
+  padding: 14px 28px;
+  font-size: 0.9375rem;
   background: var(--wa);
   color: var(--white);
   border-radius: var(--r-md);
@@ -354,27 +389,24 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 .btn-wa:hover {
   background: #1ebe5d;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(37,211,102,.44);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37,211,102,.44);
 }
 
-/* ── Loader inside btn-submit ── */
+/* ── Submit button loader ── */
 .btn-loader {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 1rem;
+  font-size: 0.9375rem;
 }
-.btn-loader svg {
-  animation: spin .7s linear infinite;
-  flex-shrink: 0;
-}
+.btn-loader svg { animation: spin .7s linear infinite; flex-shrink: 0; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 
-/* ──────────────────────────────────────────────────────────────
+/* ══════════════════════════════════════════════════════════════
    5. HEADER (STICKY)
-────────────────────────────────────────────────────────────── */
+══════════════════════════════════════════════════════════════ */
 .header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -393,46 +425,41 @@ button { cursor: pointer; font-family: var(--font-body); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px var(--gutter);   /* v4: was 14px */
+  padding: 12px var(--gutter);   /* v6: 12px vertical — compact on mobile */
+  gap: 8px;
 }
 
 /* Logo */
 .logo {
   display: flex;
   align-items: center;
-  gap: 9px;                       /* v4: was 8px */
+  gap: 7px;
   text-decoration: none;
+  flex-shrink: 0;
 }
-.logo-mark {
-  color: var(--green);
-  display: flex;
-  align-items: center;
-}
+.logo-mark { color: var(--green); display: flex; align-items: center; }
 .logo-name {
   font-family: var(--font-head);
-  font-size: 1.15rem;             /* v4: was 1.1rem */
+  font-size: 1rem;       /* v6: 16px on mobile — readable but compact */
   font-weight: 700;
   color: var(--grey-900);
   line-height: 1;
+
+  /* Prevent logo from wrapping on small screens */
+  white-space: nowrap;
 }
 
-/* Desktop navigation */
-.desk-nav {
-  display: flex;
-  gap: 34px;                      /* v4: was 28px — more breathing room */
-}
+/* Desktop nav — hidden on mobile, shown on tablet+ */
+.desk-nav { display: none; }
 .desk-nav a {
-  font-size: .9rem;               /* v4: was .875rem */
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--grey-600);
   transition: var(--t);
-  padding: 4px 0;                 /* v4: hit area improvement */
+  padding: 4px 0;
   position: relative;
 }
-.desk-nav a:hover {
-  color: var(--green);
-}
-/* Subtle underline on hover */
+.desk-nav a:hover { color: var(--green); }
 .desk-nav a::after {
   content: '';
   position: absolute;
@@ -449,19 +476,34 @@ button { cursor: pointer; font-family: var(--font-body); }
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
-/* ── Hamburger (mobile) ── */
-.hamburger {
+/* Desktop phone — hidden on mobile */
+.header-phone {
   display: none;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  transition: color .18s;
+}
+.header-phone:hover { color: var(--green); }
+.header-phone svg { color: var(--green); flex-shrink: 0; }
+
+/* Hamburger — shown on mobile */
+.hamburger {
+  display: flex;
   flex-direction: column;
   gap: 5px;
   background: none;
   border: none;
-  padding: 6px;                  /* v4: was 4px — bigger tap area */
+  padding: 8px;          /* v6: bigger tap area on mobile */
   border-radius: var(--r-sm);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 .hamburger span {
   display: block;
@@ -471,25 +513,24 @@ button { cursor: pointer; font-family: var(--font-body); }
   border-radius: 2px;
   transition: var(--t);
 }
-/* Animated X when open */
 .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* ── Mobile nav dropdown ── */
+/* Mobile nav dropdown */
 .mobile-nav {
   display: flex;
   flex-direction: column;
   background: var(--white);
   border-top: 1px solid var(--grey-100);
-  padding: 8px var(--gutter) 20px;  /* v4: more bottom padding */
+  padding: 8px var(--gutter) 16px;
   gap: 0;
 }
 .mobile-nav[hidden] { display: none; }
 
 .mobile-nav a {
-  padding: 14px 0;               /* v4: was 11px — easier tap */
-  font-size: 1rem;               /* v4: was .95rem */
+  padding: 14px 0;       /* Large tap target */
+  font-size: 1rem;       /* v6: 16px — easy to read on mobile */
   font-weight: 500;
   color: var(--grey-800);
   border-bottom: 1px solid var(--grey-100);
@@ -498,327 +539,61 @@ button { cursor: pointer; font-family: var(--font-body); }
 .mobile-nav a:hover { color: var(--green); }
 .mobile-nav a:last-child { border: none; }
 
-/* Call button inside mobile nav */
-.mobile-call {
-  margin-top: 12px !important;
-  display: block;
-  text-align: center;
-  padding: 15px 20px !important; /* v4: was 13px */
-  background: var(--orange);
-  color: var(--white) !important;
-  border-radius: var(--r-md);
-  font-size: 1rem !important;
-  font-weight: 700 !important;
-  letter-spacing: .02em;
-  box-shadow: var(--sh-orange);
-  border-bottom: none !important;
-  transition: var(--t);
-  min-height: var(--btn-h);
-}
-.mobile-call:hover {
-  background: var(--orange-dark) !important;
-}
-
-
-/* ──────────────────────────────────────────────────────────────
-   5b. HEADER PHONE NUMBER (new in v5)
-   Visible phone number in header desktop — key trust signal.
-────────────────────────────────────────────────────────────── */
-.header-phone {
-  display: none;  /* hidden on mobile — space is too tight */
-  align-items: center;
-  gap: 6px;
-  font-size: .84rem;
-  font-weight: 700;
-  color: var(--green-dark);
-  letter-spacing: .01em;
-  transition: color .18s;
-}
-.header-phone:hover { color: var(--green); }
-.header-phone svg { color: var(--green); flex-shrink: 0; }
-
-@media (min-width: 900px) {
-  .header-phone { display: flex; }
-}
-
-/* Mobile nav phone number display */
+/* Mobile nav phone number */
 .mobile-nav-phone {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 12px 0;
-  font-size: .95rem;
+  font-size: 0.9375rem;  /* v6: 15px */
   font-weight: 700;
   color: var(--green-dark);
   border-bottom: 1px solid var(--grey-100);
 }
 .mobile-nav-phone svg { color: var(--green); flex-shrink: 0; }
 
-
-/* ──────────────────────────────────────────────────────────────
-   5c. HOW IT WORKS SECTION (new in v5)
-────────────────────────────────────────────────────────────── */
-.how-section {
-  background: var(--white);
-  border-bottom: 1px solid var(--grey-100);
-}
-
-/* 3-column step grid */
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-  margin-bottom: 44px;
-}
-
-/* Individual step card */
-.step-card {
-  display: flex;
-  gap: 18px;
-  align-items: flex-start;
-  padding: 28px 24px;
-  background: var(--grey-50);
-  border: 1px solid var(--grey-100);
-  border-radius: var(--r-lg);
-  transition: var(--t);
-}
-.step-card:hover {
-  border-color: rgba(31,110,103,.2);
-  box-shadow: var(--sh-card);
-}
-
-/* Step number badge */
-.step-num {
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  background: var(--green);
-  color: var(--white);
-  border-radius: 50%;
-  font-family: var(--font-head);
-  font-size: 1rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-.step-body h3 {
-  font-family: var(--font-head);
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--grey-900);
-  margin-bottom: 8px;
-  line-height: 1.3;
-}
-.step-body p {
-  font-size: .88rem;
-  color: var(--grey-600);
-  line-height: 1.65;
-}
-
-/* Bottom CTA of the How section */
-.how-note {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  padding: 24px 28px;
-  background: var(--green-xlight);
-  border: 1.5px solid rgba(31,110,103,.16);
-  border-radius: var(--r-lg);
-}
-.how-note p {
-  font-size: .95rem;
-  color: var(--grey-700);
-  line-height: 1.6;
-  max-width: 520px;
-}
-.how-note .btn-orange {
-  flex-shrink: 0;
-  padding: 14px 24px;
-  font-size: .93rem;
-}
-
-
-/* ──────────────────────────────────────────────────────────────
-   5d. TRUST SECTION (new in v5)
-   Dark background to visually separate trust from form section.
-────────────────────────────────────────────────────────────── */
-.trust-section {
-  background: var(--green-mid);
-}
-.trust-section .section-hd h2 { color: var(--white); }
-.trust-section .section-tag {
-  color: #9EF0D8;
-  background: rgba(158,240,216,.1);
-  border-color: rgba(158,240,216,.2);
-}
-.trust-section .section-hd p { color: rgba(255,255,255,.7); max-width: 540px; }
-
-/* 2×2 trust blocks grid */
-.trust-blocks {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.trust-block {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: var(--r-lg);
-  padding: 26px 22px;
-  transition: var(--t);
-}
-.trust-block:hover {
-  background: rgba(255,255,255,.11);
-  border-color: rgba(158,240,216,.25);
-}
-
-.t-ico {
-  font-size: 1.8rem;
-  flex-shrink: 0;
-  line-height: 1;
-  margin-top: 2px;
-}
-.t-content h3 {
-  font-family: var(--font-head);
-  font-size: .97rem;
-  font-weight: 700;
-  color: var(--white);
-  margin-bottom: 7px;
-  line-height: 1.3;
-}
-.t-content p {
-  font-size: .86rem;
-  color: rgba(255,255,255,.62);
-  line-height: 1.65;
-}
-
-
-/* ──────────────────────────────────────────────────────────────
-   5e. CARDS FOOTER — phone + more areas (new in v5)
-────────────────────────────────────────────────────────────── */
-.cards-footer {
+/* Call button in mobile nav */
+.mobile-call {
+  margin-top: 10px !important;
+  display: block !important;
   text-align: center;
-  margin-top: 4px;
-}
-.cards-footer p {
-  font-size: .9rem;
-  color: var(--grey-600);
-  line-height: 1.6;
-  margin-bottom: 6px;
-}
-.cards-direct {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  font-size: .9rem !important;
-  color: var(--grey-600) !important;
-}
-
-/* Inline call link (phone number visible as a link in cards section) */
-.inline-call {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-weight: 700;
-  color: var(--green-dark);
-  border-bottom: 1px solid rgba(31,110,103,.3);
-  transition: var(--t);
-  font-size: .9rem;
-}
-.inline-call:hover { color: var(--green); border-color: var(--green); }
-.inline-call svg { flex-shrink: 0; }
-
-
-/* ──────────────────────────────────────────────────────────────
-   5f. PITCH ALT CONTACT — direct call option next to form (new v5)
-────────────────────────────────────────────────────────────── */
-.pitch-alt-contact {
-  margin-top: 28px;
-  padding: 16px 18px;
-  background: var(--green-xlight);
-  border: 1px solid rgba(31,110,103,.14);
+  padding: 14px 20px !important;
+  background: var(--orange);
+  color: var(--white) !important;
   border-radius: var(--r-md);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.pitch-alt-contact p {
-  font-size: .84rem;
-  color: var(--grey-600);
-  margin: 0;
-  flex-shrink: 0;
-}
-.pitch-call-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--green-dark);
-  border-bottom: 1.5px solid rgba(31,110,103,.3);
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  box-shadow: var(--sh-orange);
+  border-bottom: none !important;
   transition: var(--t);
+  min-height: var(--btn-h);
 }
-.pitch-call-link:hover { color: var(--green); border-color: var(--green); }
-.pitch-call-link svg { flex-shrink: 0; color: var(--green); }
-.pitch-hours {
-  font-size: .78rem;
-  color: var(--grey-400);
-  margin-left: auto;
-  white-space: nowrap;
-}
+.mobile-call:hover { background: var(--orange-dark) !important; }
 
 
-/* ──────────────────────────────────────────────────────────────
-   5g. FINAL PHONE display in Final CTA (new v5)
-────────────────────────────────────────────────────────────── */
-.final-phone {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-  font-size: .9rem;
-}
-.final-phone a {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: .02em;
-  transition: opacity .18s;
-}
-.final-phone a:hover { opacity: .85; }
-.final-phone span {
-  font-size: .82rem;
-  color: rgba(255,255,255,.5);
-}
-
-
-/* ──────────────────────────────────────────────────────────────
+/* ══════════════════════════════════════════════════════════════
    6. HERO SECTION
-────────────────────────────────────────────────────────────── */
+   ─────────────────────────────────────────────────────────────
+   v6 KEY CHANGES:
+   • min-height changed from 100svh to auto on mobile
+     → form section is now closer and more reachable
+   • Hero H1: 22px on smallest screens, scales up smoothly
+   • Padding tightened on mobile
+══════════════════════════════════════════════════════════════ */
 .hero {
   position: relative;
-  min-height: 100svh;
+  /* v6: auto on mobile — no longer forces full viewport height.
+     This brings the form much closer on small phones.           */
+  min-height: auto;
   display: flex;
   align-items: center;
-  padding-top: 72px;
+  /* Accounts for fixed header (approx 64px on mobile) */
+  padding-top: 64px;
   background: var(--green-mid);
   overflow: hidden;
 }
 
-/* Subtle ambient radial glow */
+/* Subtle ambient glow */
 .hero::before {
   content: '';
   position: absolute;
@@ -832,27 +607,34 @@ button { cursor: pointer; font-family: var(--font-body); }
 .hero-inner {
   position: relative;
   z-index: 1;
-  padding: 56px var(--gutter) 72px;   /* v4: slightly more vertical */
-  max-width: 680px;                    /* v4: was 640px — small increase */
+  padding: 36px var(--gutter) 48px;  /* v6: tighter vertical on mobile */
+  max-width: 100%;
+  width: 100%;
 }
 
-/* Location eyebrow pill */
+/* ── Location eyebrow pill ── */
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
   background: rgba(255,255,255,.12);
   border: 1px solid rgba(255,255,255,.2);
   border-radius: var(--r-pill);
-  padding: 6px 16px;                  /* v4: was 5px 14px */
-  font-size: .8rem;                   /* v4: was .78rem */
+  padding: 5px 13px;
+  font-size: 0.6875rem;  /* v6: 11px on mobile — small but readable */
   font-weight: 600;
-  letter-spacing: .04em;
+  letter-spacing: .03em;
   color: rgba(255,255,255,.85);
-  margin-bottom: 24px;                /* v4: was 22px */
+  margin-bottom: 18px;
+
+  /* v6: Allow eyebrow to wrap on small screens with many areas */
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
+  line-height: 1.4;
 }
 
-/* Live green dot */
+/* Live dot */
 .eyebrow-dot {
   width: 7px; height: 7px;
   background: #5EE8B4;
@@ -862,59 +644,63 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 @keyframes dotPulse {
   0%   { box-shadow: 0 0 0 0   rgba(94,232,180,.55); }
-  70%  { box-shadow: 0 0 0 9px rgba(94,232,180,0); }
+  70%  { box-shadow: 0 0 0 8px rgba(94,232,180,0); }
   100% { box-shadow: 0 0 0 0   rgba(94,232,180,0); }
 }
 
-/* ── HERO HEADLINE — v4 size increase ~14% ── */
+/* ── HERO H1 — MOBILE-FIRST FONT SIZE ──
+   v6 Target: 22px mobile, 26px at 480px, scales to 52px desktop.
+   Was: 38.4px minimum (way too large on 320px screens).
+   
+   We use a pure vw-based approach with explicit px overrides
+   in breakpoints rather than relying on clamp() alone,
+   because clamp() minimum = base em size which was 38px.       */
 .hero-h1 {
   font-family: var(--font-head);
-  font-size: clamp(2.4rem, 7.2vw, 4.35rem);  /* v4: was clamp(2.1, 6.5vw, 3.8rem) */
+  font-size: 1.375rem;   /* v6: 22px on mobile — matches 22-26px guideline */
   font-weight: 800;
   color: var(--white);
-  line-height: 1.08;
-  letter-spacing: -.025em;
+  line-height: 1.2;      /* v6: was 1.08 — slightly more readable on mobile */
+  letter-spacing: -.01em;
   margin-bottom: 0;
 }
 
-/* Price range — mint colour */
+/* Price range line in hero H1 */
 .hero-range {
   display: block;
-  color: #9EF0D8;
+  color: #9EF0D8;  /* mint accent */
 }
 
-/* ── HERO SUB-HEADLINE — v4 improved size & spacing ── */
+/* ── HERO SUBHEADLINE ──
+   v6 Target: 14px mobile, scales to 18px desktop.
+   Was: 1rem minimum = 16px — slightly large for mobile.       */
 .hero-sub {
-  font-size: clamp(1rem, 2.2vw, 1.18rem);    /* v4: was clamp(.95, 2vw, 1.1rem) */
-  color: rgba(255,255,255,.78);
-  margin: 18px 0 30px;                        /* v4: was 14px 0 28px */
-  line-height: 1.7;
+  font-size: 0.875rem;   /* v6: 14px on mobile — within 14-16px guideline */
+  color: rgba(255,255,255,.8);
+  margin: 14px 0 24px;
+  line-height: 1.55;
 }
 .hero-sub strong { color: var(--white); font-weight: 700; }
 
-/* Utility: show <br> only on desktop */
-.br-desk { display: none; }
-@media (min-width: 640px) { .br-desk { display: block; } }
-
-/* ── Trust strip ── */
+/* ── Trust strip — 3 badges ── */
 .trust-strip {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-  margin-bottom: 36px;   /* v4: was 32px */
+  flex-direction: column;  /* v6: stacked on mobile by default */
+  gap: 1px;
+  margin-bottom: 28px;
 }
 .trust-item {
   display: flex;
   align-items: center;
-  gap: 11px;
-  padding: 15px 22px;    /* v4: was 14px 20px */
+  gap: 10px;
+  padding: 12px 14px;      /* v6: tighter on mobile */
   background: rgba(255,255,255,.08);
   border: 1px solid rgba(255,255,255,.12);
 }
-/* Pill-group style border-radius */
-.trust-item:first-child { border-radius: var(--r-md) 0 0 var(--r-md); }
-.trust-item:last-child  { border-radius: 0 var(--r-md) var(--r-md) 0; }
-.trust-item + .trust-item { border-left: none; }
+/* Rounded corners on stack */
+.trust-item:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
+.trust-item:last-child  { border-radius: 0 0 var(--r-md) var(--r-md); }
+.trust-item + .trust-item { border-top: none; }
 
 .trust-sep  { display: none; }
 .trust-icon { color: #9EF0D8; flex-shrink: 0; display: flex; }
@@ -922,107 +708,187 @@ button { cursor: pointer; font-family: var(--font-body); }
 .trust-item > span:last-child {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 .trust-item b {
-  font-size: .9rem;      /* v4: was .88rem */
+  font-size: 0.875rem;    /* v6: 14px */
   font-weight: 700;
   color: var(--white);
   line-height: 1.2;
 }
 .trust-item small {
-  font-size: .74rem;     /* v4: was .72rem */
-  color: rgba(255,255,255,.55);
+  font-size: 0.75rem;     /* v6: 12px — helper text guideline */
+  color: rgba(255,255,255,.58);
   font-weight: 400;
 }
 
-/* ── Hero CTA buttons row ── */
+/* ── Hero CTA buttons ── */
 .hero-ctas {
   display: flex;
-  flex-wrap: wrap;
-  gap: 14px;             /* v4: was 12px */
-  margin-bottom: 20px;   /* v4: was 18px */
+  flex-direction: column;   /* v6: stacked on mobile */
+  gap: 10px;
+  margin-bottom: 16px;
 }
+/* Both hero buttons full-width on mobile */
+.hero-ctas .btn { width: 100%; }
 
-/* Response-time note */
+/* Response time note */
 .hero-note {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: .8rem;      /* v4: was .78rem */
-  color: rgba(255,255,255,.48);
+  font-size: 0.75rem;    /* v6: 12px */
+  color: rgba(255,255,255,.5);
+  line-height: 1.4;
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   7. QUICK SELECT SECTION
-   The "Show Matching Flats" button lives here — key fix in v4.
-────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   7. HOW IT WORKS SECTION
+══════════════════════════════════════════════════════════════ */
+.how-section {
+  background: var(--white);
+  border-bottom: 1px solid var(--grey-100);
+}
+
+.steps-grid {
+  display: flex;
+  flex-direction: column;   /* v6: stacked on mobile */
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.step-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 20px 18px;
+  background: var(--grey-50);
+  border: 1px solid var(--grey-100);
+  border-radius: var(--r-lg);
+  transition: var(--t);
+}
+.step-card:hover {
+  border-color: rgba(31,110,103,.2);
+  box-shadow: var(--sh-card);
+}
+
+.step-num {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  background: var(--green);
+  color: var(--white);
+  border-radius: 50%;
+  font-family: var(--font-head);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.step-body h3 {
+  font-family: var(--font-head);
+  font-size: 0.9375rem;   /* v6: 15px on mobile */
+  font-weight: 700;
+  color: var(--grey-900);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.step-body p {
+  font-size: 0.8125rem;   /* v6: 13px on mobile — within body guideline */
+  color: var(--grey-600);
+  line-height: 1.55;
+}
+
+/* How section bottom note + CTA */
+.how-note {
+  display: flex;
+  flex-direction: column;  /* v6: stacked on mobile */
+  gap: 16px;
+  padding: 20px 18px;
+  background: var(--green-xlight);
+  border: 1.5px solid rgba(31,110,103,.16);
+  border-radius: var(--r-lg);
+}
+.how-note p {
+  font-size: 0.875rem;    /* v6: 14px */
+  color: var(--grey-700);
+  line-height: 1.6;
+}
+.how-note .btn-orange {
+  width: 100%;            /* v6: full-width on mobile */
+  padding: 14px 20px;
+  font-size: 0.9375rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   8. QUICK SELECT SECTION
+══════════════════════════════════════════════════════════════ */
 .qs-section {
   background: var(--grey-50);
   border-top: 1px solid var(--grey-100);
   border-bottom: 1px solid var(--grey-100);
-  padding: 64px 0;       /* v4: was 56px — more breathing room */
+  padding: 40px 0;        /* v6: tighter on mobile */
 }
 
-/* Section header */
 .qs-header {
   text-align: center;
-  margin-bottom: 40px;   /* v4: was 36px */
+  margin-bottom: 28px;
 }
 .qs-header h2 {
   font-family: var(--font-head);
-  font-size: clamp(1.5rem, 3.8vw, 2rem);   /* v4: was clamp(1.4, 3.5vw, 1.9rem) */
+  font-size: 1.25rem;     /* v6: 20px on mobile */
   font-weight: 700;
   color: var(--grey-900);
-  margin-bottom: 8px;    /* v4: was 6px */
-  line-height: 1.25;
+  margin-bottom: 6px;
+  line-height: 1.3;
 }
 .qs-header p {
-  font-size: .95rem;     /* v4: was .9rem */
+  font-size: 0.875rem;    /* v6: 14px */
   color: var(--grey-600);
-  line-height: 1.6;
+  line-height: 1.55;
 }
 
-/* Group spacing */
-.qs-group { margin-bottom: 26px; }  /* v4: was 20px */
+.qs-group { margin-bottom: 22px; }
 
-/* Row label */
 .qs-label {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: .75rem;
+  font-size: 0.6875rem;   /* v6: 11px */
   font-weight: 700;
   letter-spacing: .09em;
   text-transform: uppercase;
   color: var(--grey-600);
-  margin-bottom: 12px;   /* v4: was 10px */
+  margin-bottom: 10px;
 }
 .qs-label svg { color: var(--green); }
 
-/* Pill container */
+/* Pills container */
 .pill-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;               /* v6: was 10px — tighter on mobile */
 }
 
-/* ── Selection pills ── */
+/* Selection pills */
 .pill {
-  padding: 12px 24px;    /* v4: was 11px 22px — slightly more vertical padding */
+  padding: 10px 18px;     /* v6: was 12px 24px — tighter on mobile */
   background: var(--white);
   border: 1.5px solid var(--grey-200);
   border-radius: var(--r-pill);
   font-family: var(--font-body);
-  font-size: .93rem;     /* v4: was .9rem */
+  font-size: 0.875rem;    /* v6: 14px on mobile */
   font-weight: 600;
   color: var(--grey-800);
   cursor: pointer;
   transition: var(--t);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  min-height: 46px;      /* v4: ensure comfortable tap */
+  min-height: 42px;       /* Comfortable tap target */
 }
 .pill:hover {
   border-color: var(--green);
@@ -1033,80 +899,63 @@ button { cursor: pointer; font-family: var(--font-body); }
   background: var(--green);
   border-color: var(--green);
   color: var(--white);
-  box-shadow: 0 2px 10px rgba(31,110,103,.25);
-}
-.pill:focus-visible {
-  outline: 2px solid var(--green);
-  outline-offset: 2px;
+  box-shadow: 0 2px 8px rgba(31,110,103,.25);
 }
 
-/* ── QUICK RESULT BANNER ──
-   This is the fixed section. The "Show Matching Flats" button
-   was congested. v4 fixes:
-   • Card has more padding
-   • Button gets full width + generous padding
-   • Clear gap between text and button
-   • Button has strong shadow and hover
-────────────────────────────────────────────────────────────── */
+/* Result banner after selection */
 .qs-result {
-  margin-top: 32px;      /* v4: was 28px */
-  padding: 24px 28px;    /* v4: was 20px 24px — more comfortable */
+  margin-top: 24px;
+  padding: 20px 18px;
   background: var(--white);
   border: 1.5px solid var(--green);
   border-radius: var(--r-lg);
-  box-shadow: 0 4px 20px rgba(31,110,103,.10);  /* v4: added subtle shadow */
+  box-shadow: 0 4px 20px rgba(31,110,103,.10);
   display: flex;
-  flex-direction: column;    /* v4: was row — stack text + button */
-  gap: 18px;                 /* v4: clear space between text and button */
+  flex-direction: column;
+  gap: 14px;
   animation: fadeUp .3s ease;
 }
 .qs-result[hidden] { display: none; }
 
-/* Result text */
 .qs-result p {
-  font-size: 1rem;       /* v4: was .95rem */
+  font-size: 0.9375rem;   /* v6: 15px */
   color: var(--grey-800);
   font-weight: 500;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 .qs-result p strong { color: var(--green); }
 
-/* ── "Show Matching Flats" button — the main fix ──
-   Full-width, large padding, clear visual weight           */
+/* "Show Matching Flats" button — full-width, prominent */
 #qsResultBtn {
-  width: 100%;              /* v4: full-width in card */
-  padding: 16px 24px;       /* v4: generous padding — not cramped */
-  font-size: 1rem;
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 0.9375rem;   /* v6: 15px */
   font-weight: 700;
   letter-spacing: .02em;
   border-radius: var(--r-md);
   min-height: var(--btn-h);
   justify-content: center;
-  /* Ensure shadow is visible */
   box-shadow: 0 4px 18px rgba(249,115,22,.38);
 }
-#qsResultBtn:hover {
-  box-shadow: 0 8px 26px rgba(249,115,22,.46);
-}
+#qsResultBtn:hover { box-shadow: 0 6px 24px rgba(249,115,22,.46); }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   8. PROPERTY CARDS
-────────────────────────────────────────────────────────────── */
-.props-section {
-  background: var(--white);
-}
+/* ══════════════════════════════════════════════════════════════
+   9. PROPERTY CARDS
+══════════════════════════════════════════════════════════════ */
+.props-section { background: var(--white); }
 
+/* Single column on mobile by default */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 24px;             /* v4: was 22px */
-  margin-bottom: 32px;   /* v4: was 28px */
+  grid-template-columns: 1fr;   /* v6: single column on mobile */
+  gap: 18px;
+  margin-bottom: 24px;
 }
 
 .prop-card {
@@ -1118,15 +967,14 @@ button { cursor: pointer; font-family: var(--font-body); }
   transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 .prop-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   box-shadow: var(--sh-lift);
   border-color: rgba(31,110,103,.18);
 }
 
-/* Card image wrapper */
 .card-img {
   position: relative;
-  height: 200px;         /* v4: was 195px */
+  height: 180px;          /* v6: was 200px — slightly shorter on mobile */
   overflow: hidden;
 }
 .card-img img {
@@ -1134,15 +982,14 @@ button { cursor: pointer; font-family: var(--font-body); }
   object-fit: cover;
   transition: transform .4s ease;
 }
-.prop-card:hover .card-img img { transform: scale(1.05); }
+.prop-card:hover .card-img img { transform: scale(1.04); }
 
-/* Badge on image */
 .card-badge {
   position: absolute;
-  top: 12px; left: 12px;  /* v4: was 10px 10px */
-  padding: 5px 12px;       /* v4: was 4px 11px */
+  top: 10px; left: 10px;
+  padding: 4px 10px;
   border-radius: var(--r-pill);
-  font-size: .71rem;
+  font-size: 0.6875rem;   /* v6: 11px */
   font-weight: 700;
   letter-spacing: .04em;
   text-transform: uppercase;
@@ -1151,130 +998,146 @@ button { cursor: pointer; font-family: var(--font-body); }
 .badge-popular { background: var(--orange);   color: var(--white); }
 .badge-value   { background: var(--grey-800); color: var(--white); }
 
-/* Card body */
-.card-info { padding: 20px 22px 22px; }  /* v4: was 18px 20px 20px */
+.card-info { padding: 16px 18px 18px; }
 
 .card-info h3 {
   font-family: var(--font-head);
-  font-size: 1.08rem;   /* v4: was 1.05rem */
+  font-size: 1rem;        /* v6: 16px on mobile */
   font-weight: 700;
   color: var(--grey-900);
-  margin-bottom: 5px;   /* v4: was 4px */
+  margin-bottom: 4px;
   line-height: 1.3;
 }
 .card-price {
-  font-size: 1.1rem;
+  font-size: 1.0625rem;   /* v6: ~17px — price is prominent */
   font-weight: 700;
   color: var(--green-dark);
-  margin-bottom: 7px;   /* v4: was 6px */
+  margin-bottom: 6px;
 }
 .card-loc {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: .84rem;    /* v4: was .82rem */
+  font-size: 0.8125rem;   /* v6: 13px */
   color: var(--grey-600);
-  margin-bottom: 14px;  /* v4: was 12px */
+  margin-bottom: 10px;
 }
 .card-loc svg { color: var(--grey-400); flex-shrink: 0; }
 
-/* Status/type chips */
-.card-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .tag {
-  padding: 4px 11px;    /* v4: was 3px 10px */
+  padding: 3px 9px;
   background: var(--grey-50);
   border: 1px solid var(--grey-100);
   border-radius: var(--r-pill);
-  font-size: .74rem;    /* v4: was .73rem */
+  font-size: 0.6875rem;   /* v6: 11px */
   font-weight: 600;
   color: var(--grey-600);
 }
-.tag-alert {
-  background: #FFF7ED;
-  border-color: #FED7AA;
-  color: #B84B0E;
-}
-.tag-info {
-  background: #EFF6FF;
-  border-color: #BFDBFE;
-  color: #1E40AF;
-}
-.tag-ready {
-  background: var(--green-xlight);
-  border-color: rgba(31,110,103,.15);
-  color: var(--green-dark);
-}
+.tag-alert  { background: #FFF7ED; border-color: #FED7AA; color: #B84B0E; }
+.tag-info   { background: #EFF6FF; border-color: #BFDBFE; color: #1E40AF; }
+.tag-ready  { background: var(--green-xlight); border-color: rgba(31,110,103,.15); color: var(--green-dark); }
 
-/* Footer note below cards */
-.cards-note {
+/* Footer below cards */
+.cards-footer {
   text-align: center;
-  font-size: .9rem;     /* v4: was .88rem */
+  margin-top: 8px;
+}
+.cards-footer p {
+  font-size: 0.875rem;
   color: var(--grey-600);
-  max-width: 500px;
-  margin: 0 auto;
   line-height: 1.6;
+  margin-bottom: 6px;
+}
+.cards-direct {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--grey-600);
 }
 
+.inline-call {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--green-dark);
+  border-bottom: 1px solid rgba(31,110,103,.3);
+  transition: var(--t);
+}
+.inline-call:hover { color: var(--green); border-color: var(--green); }
+.inline-call svg { flex-shrink: 0; }
 
-/* ──────────────────────────────────────────────────────────────
-   9. FORM SECTION
-────────────────────────────────────────────────────────────── */
+
+/* ══════════════════════════════════════════════════════════════
+   10. LEAD CAPTURE FORM SECTION
+   ─────────────────────────────────────────────────────────────
+   v6 FORM UX IMPROVEMENTS:
+   • Field spacing: 16px gap between fields (was 22px — now
+     16px mobile, 20px desktop as specified)
+   • Input height: 48px minimum — easy to tap
+   • Input font-size: 16px — prevents iOS auto-zoom
+   • Labels: 13px mobile — clearly readable
+   • Helper text: 12px — informational but not dominant
+   • Form card: 24px padding on mobile (was 40px — wasted space)
+   • Submit button: full-width, prominent
+   • Privacy note: visible and clear
+══════════════════════════════════════════════════════════════ */
 .form-section { background: var(--grey-50); }
 
-/* Two-column layout: pitch | form card */
+/* Single column on mobile — pitch above, form below */
 .form-layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;             /* v4: was 56px */
-  align-items: start;
+  grid-template-columns: 1fr;
+  gap: 28px;
 }
 
-/* ── Pitch column ── */
+/* ── Form pitch (left on desktop, top on mobile) ── */
 .form-pitch .section-tag {
   display: block;
   width: fit-content;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 .form-pitch h2 {
   font-family: var(--font-head);
-  font-size: clamp(1.7rem, 3.6vw, 2.25rem);  /* v4: slightly larger */
+  font-size: 1.25rem;     /* v6: 20px on mobile */
   font-weight: 700;
-  line-height: 1.22;
+  line-height: 1.3;
   color: var(--grey-900);
-  margin-bottom: 16px;   /* v4: was 14px */
+  margin-bottom: 12px;
 }
 .pitch-sub {
-  font-size: .97rem;     /* v4: was .95rem */
+  font-size: 0.875rem;    /* v6: 14px */
   color: var(--grey-600);
-  line-height: 1.75;
-  margin-bottom: 28px;   /* v4: was 26px */
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 /* Pitch bullet list */
 .pitch-points {
   display: flex;
   flex-direction: column;
-  gap: 16px;             /* v4: was 13px — more breathing room */
+  gap: 12px;              /* v6: 12px gap on mobile */
 }
 .pitch-points li {
   display: flex;
   align-items: flex-start;
-  gap: 12px;             /* v4: was 10px */
-  font-size: .93rem;     /* v4: was .9rem */
+  gap: 10px;
+  font-size: 0.875rem;    /* v6: 14px */
   color: var(--grey-700);
-  line-height: 1.55;
+  line-height: 1.5;
 }
-.pitch-points li strong {
-  font-weight: 600;
-  color: var(--grey-900);
-}
+.pitch-points li strong { font-weight: 600; color: var(--grey-900); }
 
-/* Icon square beside each bullet */
 .pp-icon {
   flex-shrink: 0;
-  width: 30px; height: 30px;  /* v4: was 28x28 */
+  width: 28px; height: 28px;
   background: var(--green-light);
-  border-radius: 7px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1282,75 +1145,110 @@ button { cursor: pointer; font-family: var(--font-body); }
   margin-top: 1px;
 }
 
-/* ── Form card ── */
+/* Direct call box under pitch points */
+.pitch-alt-contact {
+  margin-top: 20px;
+  padding: 14px 16px;
+  background: var(--green-xlight);
+  border: 1px solid rgba(31,110,103,.14);
+  border-radius: var(--r-md);
+  display: flex;
+  flex-direction: column;   /* v6: stacked on mobile */
+  gap: 8px;
+}
+.pitch-alt-contact p {
+  font-size: 0.8125rem;    /* v6: 13px */
+  color: var(--grey-600);
+  margin: 0;
+}
+.pitch-call-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;         /* v6: 16px — big enough to tap */
+  font-weight: 700;
+  color: var(--green-dark);
+  border-bottom: 1.5px solid rgba(31,110,103,.3);
+  transition: var(--t);
+}
+.pitch-call-link:hover { color: var(--green); border-color: var(--green); }
+.pitch-call-link svg { flex-shrink: 0; color: var(--green); }
+.pitch-hours {
+  font-size: 0.75rem;      /* v6: 12px */
+  color: var(--grey-400);
+}
+
+/* ── FORM CARD ── */
 .form-card {
   background: var(--white);
   border: 1px solid var(--grey-100);
   border-radius: var(--r-xl);
-  padding: 40px 34px;    /* v4: was 36px 30px — more interior space */
+  padding: 24px 18px;      /* v6: was 40px 34px — tighter on mobile */
   box-shadow: var(--sh-lift);
 }
 
-/* ── Form field groups ── */
-.fg { margin-bottom: 22px; }  /* v4: was 20px */
+/* ── FORM GROUPS — 16px gap on mobile ── */
+.fg { margin-bottom: 16px; }  /* v6: 16px gap between fields as specified */
 
 .fg label {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 5px;
-  font-size: .84rem;     /* v4: was .82rem */
+  gap: 4px;
+  font-size: 0.8125rem;   /* v6: 13px on mobile — within label guideline */
   font-weight: 600;
   color: var(--grey-800);
-  margin-bottom: 8px;    /* v4: was 7px */
+  margin-bottom: 6px;
   line-height: 1.3;
 }
-.req {
-  color: var(--orange);
-  font-weight: 700;
-}
+.req { color: var(--orange); font-weight: 700; }
 .label-hint {
-  font-size: .76rem;
+  font-size: 0.75rem;     /* v6: 12px */
   font-weight: 400;
   color: var(--grey-400);
   margin-left: auto;
 }
 
-/* ── Input & Select — v4: taller, more tap-friendly ── */
+/* ── INPUTS & SELECTS ──
+   Key rule: font-size MUST be 16px to prevent iOS auto-zoom.
+   If font-size < 16px on an input, iOS Safari zooms in on focus.
+   This is a critical mobile UX issue.                           */
 .fg input,
 .fg select {
   width: 100%;
-  padding: 14px 16px;    /* v4: was 12px 13px — 2px taller ≈ 48px total */
+  /* v6: 13px top/bottom + 1px border top/bottom = ~48px minimum height */
+  padding: 13px 14px;
   border: 1.5px solid var(--grey-200);
   border-radius: var(--r-md);
   font-family: var(--font-body);
-  font-size: .95rem;     /* v4: was .93rem */
+  font-size: 1rem;         /* v6: 16px — PREVENTS iOS AUTO-ZOOM */
   color: var(--grey-900);
   background: var(--white);
   outline: none;
   transition: border-color .2s, box-shadow .2s;
   appearance: none;
   -webkit-appearance: none;
-  line-height: 1.5;
+  line-height: 1.4;
+  min-height: 48px;        /* v6: explicit 48px minimum */
 }
 
-/* Custom select arrow */
+/* Custom dropdown arrow */
 .fg select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%239CA3AF' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 15px center;
-  padding-right: 40px;
+  background-position: right 14px center;
+  padding-right: 38px;
   cursor: pointer;
 }
 
-/* Focus state — clear green ring */
+/* ── Focus state — clear green ring ── */
 .fg input:focus,
 .fg select:focus {
   border-color: var(--green);
   box-shadow: var(--sh-input);
 }
 
-/* Error state */
+/* ── Error state ── */
 .fg input.err,
 .fg select.err {
   border-color: var(--red);
@@ -1360,49 +1258,46 @@ button { cursor: pointer; font-family: var(--font-body); }
 /* Error message */
 .ferr {
   display: none;
-  margin-top: 6px;
-  font-size: .79rem;
-  font-weight: 500;
+  margin-top: 5px;
+  font-size: 0.75rem;     /* v6: 12px */
+  font-weight: 600;
   color: var(--red);
 }
 .ferr.show { display: block; }
 
-/* Hint below select */
+/* Helper hint text */
 .fhint {
   display: block;
-  margin-top: 6px;
-  font-size: .78rem;
+  margin-top: 5px;
+  font-size: 0.75rem;     /* v6: 12px */
   color: var(--grey-400);
   line-height: 1.5;
 }
 
-/* Privacy note below submit button */
+/* Privacy note below submit */
 .form-note {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 5px;
-  margin-top: 12px;      /* v4: was 11px */
-  font-size: .79rem;     /* v4: was .77rem */
+  margin-top: 10px;
+  font-size: 0.75rem;     /* v6: 12px */
   color: var(--grey-400);
-  line-height: 1.4;
+  line-height: 1.5;
 }
-.form-note svg { flex-shrink: 0; }
+.form-note svg { flex-shrink: 0; margin-top: 1px; }
 
-/* ── Success state ── */
-.form-success {
-  text-align: center;
-  padding: 16px 0;       /* v4: was 8px — more room */
-}
+/* ── SUCCESS STATE ── */
+.form-success { text-align: center; padding: 12px 0; }
 .form-success[hidden] { display: none; }
 
 .success-check {
-  width: 64px; height: 64px;  /* v4: was 60px */
+  width: 60px; height: 60px;
   background: var(--green-light);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 18px;
+  margin: 0 auto 14px;
   color: var(--green);
   animation: popIn .38s cubic-bezier(.34,1.56,.64,1);
 }
@@ -1410,17 +1305,18 @@ button { cursor: pointer; font-family: var(--font-body); }
   from { transform: scale(.5); opacity: 0; }
   to   { transform: scale(1);  opacity: 1; }
 }
+
 .form-success h3 {
   font-family: var(--font-head);
-  font-size: 1.55rem;    /* v4: was 1.5rem */
+  font-size: 1.25rem;    /* v6: 20px */
   font-weight: 700;
   color: var(--grey-900);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .form-success p {
-  font-size: .92rem;     /* v4: was .9rem */
+  font-size: 0.875rem;   /* v6: 14px */
   color: var(--grey-600);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   line-height: 1.6;
 }
 .success-alt a {
@@ -1430,9 +1326,55 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   10. FINAL CTA SECTION
-────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   11. TRUST SECTION (dark green)
+══════════════════════════════════════════════════════════════ */
+.trust-section { background: var(--green-mid); }
+.trust-section .section-hd h2  { color: var(--white); }
+.trust-section .section-tag     { color: #9EF0D8; background: rgba(158,240,216,.1); border-color: rgba(158,240,216,.2); }
+.trust-section .section-hd p   { color: rgba(255,255,255,.7); max-width: 500px; }
+
+/* Single column on mobile */
+.trust-blocks {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.trust-block {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--r-lg);
+  padding: 20px 18px;
+  transition: var(--t);
+}
+.trust-block:hover {
+  background: rgba(255,255,255,.11);
+  border-color: rgba(158,240,216,.25);
+}
+
+.t-ico { font-size: 1.6rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+.t-content h3 {
+  font-family: var(--font-head);
+  font-size: 0.9375rem;   /* v6: 15px */
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.t-content p {
+  font-size: 0.8125rem;   /* v6: 13px */
+  color: rgba(255,255,255,.62);
+  line-height: 1.6;
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   12. FINAL CTA SECTION
+══════════════════════════════════════════════════════════════ */
 .final-cta {
   background: var(--green-mid);
   padding: var(--section-v) 0;
@@ -1441,41 +1383,66 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 .final-inner h2 {
   font-family: var(--font-head);
-  font-size: clamp(1.9rem, 4.8vw, 2.9rem);  /* v4: slightly larger */
+  font-size: 1.375rem;    /* v6: 22px on mobile */
   font-weight: 700;
   color: var(--white);
-  line-height: 1.15;
-  margin-bottom: 14px;   /* v4: was 12px */
+  line-height: 1.25;
+  margin-bottom: 10px;
 }
-.final-inner p {
-  font-size: 1rem;
-  color: rgba(255,255,255,.68);
-  margin-bottom: 36px;   /* v4: was 32px */
+.final-inner > p {
+  font-size: 0.875rem;    /* v6: 14px */
+  color: rgba(255,255,255,.7);
+  margin-bottom: 20px;
   line-height: 1.6;
 }
-.final-btns {
+
+/* Large phone number display */
+.final-phone {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 14px;             /* v4: was 12px */
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 24px;
+}
+.final-phone a {
+  font-size: 1.375rem;    /* v6: 22px — large, tappable */
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: .02em;
+  transition: opacity .18s;
+}
+.final-phone a:hover { opacity: .85; }
+.final-phone span {
+  font-size: 0.75rem;     /* v6: 12px */
+  color: rgba(255,255,255,.5);
 }
 
-/* Mobile utility */
-.br-mob { display: none; }
+/* CTA button row */
+.final-btns {
+  display: flex;
+  flex-direction: column;  /* v6: stacked on mobile */
+  align-items: stretch;
+  gap: 10px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+.final-btns .btn { justify-content: center; width: 100%; }
+
+.br-mob { display: block; }  /* v6: line break in headings for mobile */
 
 
-/* ──────────────────────────────────────────────────────────────
-   11. FOOTER
-────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   13. FOOTER
+══════════════════════════════════════════════════════════════ */
 .footer {
   background: var(--grey-900);
-  padding: 40px 0 24px;  /* v4: was 36px 0 20px */
+  padding: 32px 0 18px;
 }
 .footer-inner {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;             /* v4: was 16px */
+  gap: 16px;
   text-align: center;
 }
 .footer-logo .logo-name { color: var(--white); }
@@ -1485,10 +1452,10 @@ button { cursor: pointer; font-family: var(--font-body); }
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 22px;             /* v4: was 18px */
+  gap: 14px;
 }
 .footer-links a {
-  font-size: .84rem;     /* v4: was .82rem */
+  font-size: 0.8125rem;   /* v6: 13px */
   font-weight: 500;
   color: rgba(255,255,255,.48);
   transition: color .18s;
@@ -1496,61 +1463,61 @@ button { cursor: pointer; font-family: var(--font-body); }
 .footer-links a:hover { color: var(--white); }
 
 .footer-copy {
-  font-size: .77rem;
+  font-size: 0.75rem;     /* v6: 12px */
   color: rgba(255,255,255,.24);
-  padding-top: 12px;
+  padding-top: 10px;
   border-top: 1px solid rgba(255,255,255,.08);
   width: 100%;
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   12. FLOATING WHATSAPP FAB
-────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   14. FLOATING WHATSAPP FAB
+══════════════════════════════════════════════════════════════ */
 .wa-fab {
   position: fixed;
-  bottom: 26px; right: 22px;
+  bottom: 20px; right: 16px;
   z-index: 999;
-  width: 58px; height: 58px;  /* v4: was 56px */
+  width: 52px; height: 52px;   /* v6: slightly smaller on mobile */
   background: var(--wa);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 22px rgba(37,211,102,.42);
+  box-shadow: 0 4px 20px rgba(37,211,102,.42);
   transition: transform .22s ease, box-shadow .22s ease;
 }
 .wa-fab:hover {
   transform: scale(1.1);
-  box-shadow: 0 8px 28px rgba(37,211,102,.58);
+  box-shadow: 0 6px 26px rgba(37,211,102,.58);
 }
 .wa-fab:focus-visible {
   outline: 3px solid var(--white);
   outline-offset: 3px;
 }
 
-/* Pulsing ring */
+/* Pulse ring */
 .wa-ring {
   position: absolute;
-  inset: -6px;
+  inset: -5px;
   border-radius: 50%;
   border: 2px solid rgba(37,211,102,.38);
   animation: waRipple 2.6s ease infinite;
 }
 @keyframes waRipple {
   0%   { transform: scale(1);    opacity: 1; }
-  100% { transform: scale(1.24); opacity: 0; }
+  100% { transform: scale(1.22); opacity: 0; }
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   13. SCROLL REVEAL
-────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   15. SCROLL REVEAL ANIMATION
+══════════════════════════════════════════════════════════════ */
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(16px);
   transition: opacity .5s ease, transform .5s ease;
 }
 .reveal.in {
@@ -1558,132 +1525,301 @@ button { cursor: pointer; font-family: var(--font-body); }
   transform: none;
 }
 
-/* Prefer-reduced-motion: disable animations for accessibility */
+/* Accessibility: remove all motion for users who prefer it */
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal.in {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .wa-ring    { animation: none; }
-  .eyebrow-dot { animation: none; }
-  html { scroll-behavior: auto; }
+  .reveal, .reveal.in   { opacity: 1; transform: none; transition: none; }
+  .wa-ring              { animation: none; }
+  .eyebrow-dot          { animation: none; }
+  .btn-loader svg       { animation: none; }
+  html                  { scroll-behavior: auto; }
 }
 
 
-/* ──────────────────────────────────────────────────────────────
-   14. RESPONSIVE — Large Desktop (≥ 1200px)
-────────────────────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════════════════════
+   16. RESPONSIVE — SMALL PHONE (≥ 380px)
+   ─────────────────────────────────────────────────────────────
+   Very small phones (320–379px) use the base styles above.
+   At 380px, we can afford slightly more generous type.
+══════════════════════════════════════════════════════════════ */
+@media (min-width: 380px) {
+  /* Hero headline grows a little */
+  .hero-h1 { font-size: 1.5rem; }   /* 24px */
+
+  /* Pills can be slightly larger */
+  .pill { padding: 11px 20px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   17. RESPONSIVE — MEDIUM PHONE (≥ 480px)
+   ─────────────────────────────────────────────────────────────
+   At 480px, trust strip can go side-by-side.
+   Hero headline at 26px. Section headings at 22px.
+══════════════════════════════════════════════════════════════ */
+@media (min-width: 480px) {
+  :root { --gutter: 20px; }
+
+  /* Hero headline: top of 22-26px range */
+  .hero-h1 { font-size: 1.625rem; }  /* 26px */
+
+  /* Sub-headline slightly larger */
+  .hero-sub { font-size: 0.9375rem; }  /* 15px */
+
+  /* Trust strip: row layout at 480px */
+  .trust-strip { flex-direction: row; gap: 0; }
+  .trust-item { flex: 1; }
+  .trust-item:first-child { border-radius: var(--r-md) 0 0 var(--r-md); }
+  .trust-item:last-child  { border-radius: 0 var(--r-md) var(--r-md) 0; }
+  .trust-item + .trust-item { border-top: 1px solid rgba(255,255,255,.12); border-left: none; }
+
+  /* Hero CTAs: side-by-side at 480px */
+  .hero-ctas { flex-direction: row; }
+  .hero-ctas .btn { width: auto; flex: 1; }
+
+  /* Section headings */
+  .section-hd h2 { font-size: 1.375rem; }  /* 22px */
+  .qs-header h2  { font-size: 1.375rem; }
+
+  /* Form pitch heading */
+  .form-pitch h2 { font-size: 1.375rem; }
+
+  /* Final CTA heading */
+  .final-inner h2 { font-size: 1.5rem; }   /* 24px */
+
+  /* Final buttons: side-by-side */
+  .final-btns { flex-direction: row; max-width: 420px; }
+  .final-btns .btn { width: auto; flex: 1; }
+
+  /* Property cards: 2 columns at 480px on larger phones */
+  .cards-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Steps: still single column at 480px */
+  .how-note { flex-direction: row; align-items: center; }
+  .how-note .btn-orange { width: auto; flex-shrink: 0; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   18. RESPONSIVE — TABLET SMALL (≥ 600px)
+   ─────────────────────────────────────────────────────────────
+   Forms start gaining more space. Sections breathe more.
+══════════════════════════════════════════════════════════════ */
+@media (min-width: 600px) {
+  :root { --section-v: 64px; }
+
+  body { font-size: 15px; line-height: 1.65; }
+
+  /* Section headings scale up */
+  .section-hd h2 { font-size: 1.625rem; }  /* 26px */
+  .qs-header h2  { font-size: 1.5rem;   }  /* 24px */
+  .form-pitch h2 { font-size: 1.5rem;   }
+  .final-inner h2 { font-size: 1.75rem; }  /* 28px */
+
+  /* Hero headline scales */
+  .hero-h1 { font-size: clamp(1.625rem, 4.5vw, 2.75rem); }
+
+  /* Hero sub */
+  .hero-sub { font-size: 1rem; }
+
+  /* Section tag */
+  .section-tag { font-size: 0.6875rem; }
+
+  /* Buttons slightly larger */
+  .btn-lg { padding: 15px 28px; }
+
+  /* Form card more padding */
+  .form-card { padding: 30px 28px; }
+
+  /* Form field gap */
+  .fg { margin-bottom: 18px; }
+
+  /* Steps grid: 3 columns */
+  .steps-grid { flex-direction: row; gap: 16px; }
+
+  /* Trust blocks: 2 columns */
+  .trust-blocks { grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* BR utility */
+  .br-desk { display: block; }
+  .br-mob  { display: none; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   19. RESPONSIVE — TABLET (≥ 768px)
+   ─────────────────────────────────────────────────────────────
+   Desktop nav appears. More generous spacing throughout.
+══════════════════════════════════════════════════════════════ */
+@media (min-width: 768px) {
+  :root {
+    --gutter: 24px;
+    --section-v: 80px;
+  }
+
+  /* Show desktop nav */
+  .desk-nav { display: flex; gap: 28px; }
+  .hamburger { display: none; }
+  /* Show call button in header again */
+  .header-actions .btn-call { display: inline-flex; }
+
+  /* Show phone number in header */
+  .header-phone { display: flex; }
+
+  /* Header inner padding */
+  .header-inner { padding: 14px var(--gutter); }
+
+  /* Logo size */
+  .logo-name { font-size: 1.1rem; }
+
+  /* Hero layout */
+  .hero { min-height: 85vh; }  /* Not full viewport but substantial */
+  .hero-inner { padding: 52px var(--gutter) 64px; max-width: 680px; }
+
+  /* Hero headline: 28px at tablet */
+  .hero-h1 { font-size: clamp(1.75rem, 4.5vw, 3.5rem); }
+
+  /* Hero sub */
+  .hero-sub { font-size: 1.05rem; margin: 16px 0 28px; }
+
+  /* Trust strip row layout already active from 480px */
+
+  /* Section headings */
+  .section-hd h2 { font-size: clamp(1.65rem, 3.5vw, 2.2rem); }
+  .section-hd p  { font-size: 0.97rem; }
+  .section-hd    { margin-bottom: 44px; }
+  .section-tag   { font-size: 0.72rem; padding: 5px 14px; }
+
+  /* QS section */
+  .qs-section    { padding: 56px 0; }
+  .qs-header h2  { font-size: clamp(1.4rem, 3vw, 1.9rem); }
+  .qs-header p   { font-size: 0.95rem; }
+  .pill          { padding: 12px 22px; font-size: 0.9rem; }
+
+  /* Cards: 3 columns at tablet */
+  .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card-img { height: 190px; }
+  .card-info { padding: 18px 20px 20px; }
+  .card-info h3 { font-size: 1.05rem; }
+
+  /* Form: 2-column layout */
+  .form-layout { grid-template-columns: 1fr 1fr; gap: 48px; }
+  .form-card   { padding: 36px 30px; }
+  .fg          { margin-bottom: 20px; }
+  .fg label    { font-size: 0.84rem; }
+
+  /* Final CTA */
+  .final-inner h2 { font-size: clamp(1.65rem, 3.5vw, 2.5rem); }
+  .final-phone a  { font-size: 1.625rem; }
+  .final-btns     { flex-direction: row; max-width: none; justify-content: center; }
+  .final-btns .btn { width: auto; flex: none; padding: 15px 32px; }
+
+  /* How section */
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .step-card  { padding: 24px 20px; }
+  .step-body h3 { font-size: 1rem; }
+  .step-body p  { font-size: 0.875rem; }
+
+  /* Trust section */
+  .trust-block { padding: 24px 20px; }
+  .t-content h3 { font-size: 1rem; }
+  .t-content p  { font-size: 0.875rem; }
+
+  /* WA fab slightly larger */
+  .wa-fab { width: 56px; height: 56px; bottom: 24px; right: 20px; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   20. RESPONSIVE — DESKTOP (≥ 1024px)
+   ─────────────────────────────────────────────────────────────
+   Full desktop experience. Wide nav, full hero, generous type.
+══════════════════════════════════════════════════════════════ */
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 28px;
+    --section-v: 96px;
+  }
+
+  body { font-size: 16px; line-height: 1.7; }
+
+  /* Hero: full viewport on large screens */
+  .hero { min-height: 100svh; }
+  .hero-inner { padding: 56px var(--gutter) 72px; max-width: 720px; }
+
+  /* Hero headline: full range */
+  .hero-h1 { font-size: clamp(2.5rem, 5vw, 3.85rem); letter-spacing: -.02em; line-height: 1.1; }
+
+  /* Hero sub */
+  .hero-sub { font-size: clamp(1rem, 1.8vw, 1.15rem); line-height: 1.65; }
+
+  /* Section headings: full desktop size */
+  .section-hd h2 { font-size: clamp(1.7rem, 3vw, 2.35rem); }
+  .section-hd    { margin-bottom: 52px; }
+
+  /* Nav spacing */
+  .desk-nav { gap: 34px; }
+
+  /* Header padding */
+  .header-inner { padding: 15px var(--gutter); }
+
+  /* Logo */
+  .logo-name { font-size: 1.15rem; }
+
+  /* Hero CTAs */
+  .hero-ctas { flex-direction: row; }
+  .hero-ctas .btn { width: auto; flex: none; }
+  .btn-lg { padding: 16px 36px; font-size: 1rem; }
+
+  /* Form */
+  .form-layout { gap: 60px; }
+  .form-card   { padding: 40px 34px; }
+  .fg          { margin-bottom: 22px; }
+  .fg label    { font-size: 0.84rem; }
+  .fg input,
+  .fg select   { padding: 14px 16px; }
+  .form-pitch h2 { font-size: clamp(1.7rem, 3vw, 2.25rem); }
+
+  /* Quick select section */
+  .qs-section { padding: 64px 0; }
+  .qs-header  { margin-bottom: 40px; }
+  .pill       { padding: 12px 24px; font-size: 0.93rem; min-height: 46px; }
+
+  /* Cards */
+  .card-img  { height: 200px; }
+  .card-info { padding: 20px 22px 22px; }
+  .card-info h3 { font-size: 1.08rem; }
+  .card-price   { font-size: 1.1rem; }
+
+  /* Final CTA */
+  .final-inner h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); }
+  .final-inner > p { font-size: 1rem; margin-bottom: 32px; }
+
+  /* Button sizes */
+  .btn-submit { font-size: 1.05rem; padding: 17px; }
+  .btn-wa,
+  .btn-final-call { padding: 16px 36px; }
+
+  /* WA fab */
+  .wa-fab { width: 58px; height: 58px; bottom: 26px; right: 22px; }
+
+  /* How section */
+  .how-note { flex-direction: row; align-items: center; padding: 24px 28px; }
+  .how-note p { font-size: 0.95rem; }
+  .how-note .btn-orange { width: auto; padding: 14px 24px; }
+
+  /* Trust blocks: 2×2 grid */
+  .trust-blocks { grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* Pitch alt contact */
+  .pitch-alt-contact { flex-direction: row; align-items: center; }
+  .pitch-hours { margin-left: auto; }
+}
+
+
+/* ══════════════════════════════════════════════════════════════
+   21. RESPONSIVE — LARGE DESKTOP (≥ 1200px)
+══════════════════════════════════════════════════════════════ */
 @media (min-width: 1200px) {
   :root { --gutter: 32px; }
   .hero-inner { max-width: 740px; }
-}
-
-
-/* ──────────────────────────────────────────────────────────────
-   15. RESPONSIVE — Tablet (≤ 900px)
-────────────────────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  /* Hide desktop nav, show hamburger */
-  .desk-nav                    { display: none; }
-  .hamburger                   { display: flex; }
-  .header-actions .btn-call    { display: none; }  /* replaced by mobile call link */
-
-  /* Form: single column */
-  .form-layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-
-  /* Hero: full width */
-  .hero-inner { max-width: 100%; }
-
-  /* Quick-result banner already column in v4 */
-
-  /* Steps grid: single column on tablet */
-  .steps-grid            { grid-template-columns: 1fr; gap: 14px; }
-
-  /* Trust blocks: single column on tablet */
-  .trust-blocks          { grid-template-columns: 1fr; gap: 14px; }
-
-  /* How note: stack */
-  .how-note              { flex-direction: column; align-items: flex-start; }
-
-  /* Section vertical padding */
-  .section               { padding: var(--section-v-tab) 0; }
-  .qs-section            { padding: 56px 0; }
-  .final-cta             { padding: var(--section-v-tab) 0; }
-}
-
-
-/* ──────────────────────────────────────────────────────────────
-   16. RESPONSIVE — Mobile (≤ 580px)
-────────────────────────────────────────────────────────────── */
-@media (max-width: 580px) {
-
-  /* ── Vertical section padding ── */
-  .section     { padding: var(--section-v-mob) 0; }
-  .qs-section  { padding: 48px 0; }
-  .final-cta   { padding: var(--section-v-mob) 0; }
-
-  /* ── Trust strip: stack vertically ── */
-  .trust-strip { flex-direction: column; gap: 1px; }
-  .trust-item,
-  .trust-item:first-child,
-  .trust-item:last-child {
-    border-radius: 0;
-    border-left: 1px solid rgba(255,255,255,.12);
-  }
-  .trust-item:first-child { border-radius: var(--r-md) var(--r-md) 0 0; }
-  .trust-item:last-child  { border-radius: 0 0 var(--r-md) var(--r-md); }
-  .trust-item + .trust-item {
-    border-left: 1px solid rgba(255,255,255,.12);
-    border-top: none;
-  }
-
-  /* ── Hero CTAs: full-width ── */
-  .hero-ctas              { flex-direction: column; gap: 12px; }
-  .hero-ctas .btn         { width: 100%; }
-
-  /* ── Property cards: single column ── */
-  .cards-grid             { grid-template-columns: 1fr; }
-
-  /* ── Pill group: tighter on very small screens ── */
-  .pill-group             { gap: 8px; }
-  .pill                   { padding: 12px 18px; font-size: .88rem; }
-
-  /* ── Quick result: already column ── */
-  .qs-result              { padding: 20px 20px; }
-
-  /* ── Form card: tighter padding ── */
-  .form-card              { padding: 28px 20px; }
-
-  /* ── Form inputs: slightly more comfortable ── */
-  .fg input,
-  .fg select              { padding: 13px 14px; font-size: .95rem; }
-
-  /* ── Final CTA: stack buttons ── */
-  .final-btns             { flex-direction: column; align-items: stretch; gap: 12px; }
-  .final-btns .btn        { justify-content: center; }
-  .br-mob                 { display: block; }
-
-  /* ── WhatsApp FAB: slightly smaller ── */
-  .wa-fab                 { bottom: 18px; right: 14px; width: 52px; height: 52px; }
-  .wa-fab svg             { width: 23px; height: 23px; }
-}
-
-
-/* ──────────────────────────────────────────────────────────────
-   17. RESPONSIVE — Very small phones (≤ 380px)
-────────────────────────────────────────────────────────────── */
-@media (max-width: 380px) {
-  :root { --gutter: 16px; }
-
-  .hero-h1 {
-    font-size: 2.1rem;
-    letter-spacing: -.01em;
-  }
-  .btn-lg         { padding: 15px 22px; font-size: .96rem; }
-  .form-card      { padding: 24px 16px; }
-  .logo-name      { font-size: 1rem; }
 }
