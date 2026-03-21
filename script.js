@@ -477,3 +477,73 @@ function closeNav() {
     });
   });
 })();
+
+/* ── SUPABASE HOMEPAGE PROPERTY LOADER ── */
+document.addEventListener("DOMContentLoaded", async function () {
+  var grid = document.getElementById("propCardsGrid");
+  if (!grid) return;
+
+  try {
+    var { data, error } = await db
+      .from("properties")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(3);
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      grid.innerHTML = "<div style='grid-column:1/-1;text-align:center;padding:40px;color:#666'><p>No properties listed yet.</p></div>";
+      return;
+    }
+
+    grid.innerHTML = "";
+
+    data.forEach(function (prop) {
+      var badgeMap = {
+        ready: { label: "✓ Ready to Move",   cls: "badge-ready"  },
+        hot:   { label: "🔥 Most Enquired",  cls: "badge-orange" },
+        value: { label: "💎 Best Value",     cls: "badge-dark"   },
+        new:   { label: "🆕 New Launch",     cls: "badge-new"    },
+        few:   { label: "⚡ Few Units Left", cls: "badge-few"    }
+      };
+
+      var badge   = prop.badge && badgeMap[prop.badge] ? badgeMap[prop.badge] : null;
+      var badgeHtml = badge ? "<span class='card-badge " + badge.cls + "'>" + badge.label + "</span>" : "";
+
+      var imgHtml = prop.image_url
+        ? "<img src='" + prop.image_url + "' alt='" + prop.title + "' loading='lazy'/>"
+        : "<div style='width:100%;height:100%;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:2rem'>🏠</div>";
+
+      var tagsHtml = "";
+      if (prop.tags) {
+        prop.tags.split(",").forEach(function (t) {
+          tagsHtml += "<span class='tag'>" + t.trim() + "</span>";
+        });
+      }
+
+      var article = document.createElement("article");
+      article.className = "card";
+      article.innerHTML =
+        "<div class='card-img'>" + imgHtml + badgeHtml + "</div>" +
+        "<div class='card-info'>" +
+          "<h3>" + prop.title + "</h3>" +
+          "<p class='c-price'>" + prop.price + "</p>" +
+          "<p class='c-loc'>" +
+            "<svg width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round'><path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z'/><circle cx='12' cy='10' r='3'/></svg>" +
+            prop.location +
+          "</p>" +
+          "<div class='tags'>" + tagsHtml + "</div>" +
+          "<a href='#form' class='btn btn-card'>Ask About This Flat →</a>" +
+        "</div>";
+
+      grid.appendChild(article);
+    });
+
+    var note = document.getElementById("cardsNote");
+    if (note) note.style.display = "";
+
+  } catch (err) {
+    console.error("Failed to load properties:", err);
+  }
+});
