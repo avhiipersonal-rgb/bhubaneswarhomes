@@ -37,15 +37,27 @@
     <div class="wrap header-inner">
 
       <!-- Logo -->
-      <a href="#" class="logo" aria-label="BhubaneswarHomes – back to top">
-        <span class="logo-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 22" width="22" height="22" fill="none" aria-hidden="true">
-            <path d="M12 1L1 9.5V21h7v-7h8v7h7V9.5L12 1z"
-              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span class="logo-name">BhubaneswarHomes</span>
-      </a>
+      <a href="#" class="logo" aria-label="Gharelu – back to top">
+  
+  <!-- Icon -->
+  <span class="logo-mark">
+    <svg viewBox="0 0 24 22" fill="none">
+      <path d="M12 1L1 9.5V21h7v-7h8v7h7V9.5L12 1z"
+        stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+    </svg>
+  </span>
+
+  <!-- Text -->
+  <span class="logo-text">
+    <span class="logo-name">
+      Ghar<span class="logo-accent">elu</span>
+    </span>
+    <span class="logo-tag">Verified Homes</span>
+  </span>
+
+</a>
+
+      
 
       <!-- Desktop nav -->
       <nav class="desk-nav" aria-label="Site navigation">
@@ -461,114 +473,37 @@
         </p>
       </div>
 
-      <div class="cards-grid">
+<div class="cards" id="propCardsGrid">
 
-        <!-- Card 1 — Patia (near KIIT) -->
-        <article class="prop-card" aria-label="Sunrise Residency — 3 BHK near KIIT University">
-          <div class="card-img">
-            <img
-              src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=75"
-              alt="Sunrise Residency – 3 BHK apartments near KIIT in Patia, Bhubaneswar"
-              loading="lazy" width="600" height="340"
-            />
-            <span class="card-badge badge-ready">✓ Ready to Move</span>
-          </div>
-          <div class="card-info">
-            <h3>Sunrise Residency</h3>
-            <p class="card-price">₹65L – ₹85L</p>
-            <p class="card-loc">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-              <!--
-                LOCAL TRUST: "Near KIIT University" is a recognisable
-                landmark that Bhubaneswar buyers immediately understand.
-              -->
-              Patia · Near KIIT University
-            </p>
-            <div class="card-tags">
-              <span class="tag">3 BHK</span>
-              <span class="tag">1450 sq.ft</span>
-              <span class="tag tag-alert">⚡ Only a Few Left</span>
-            </div>
-            <!--
-              BUTTON COPY: "Ask About This Flat" is more conversational.
-              It lowers commitment — asking is easier than "getting details".
-            -->
-            <a href="#form" class="btn btn-card">Ask About This Flat →</a>
-          </div>
-        </article>
+  <!-- Skeleton loading cards — shown while Supabase fetches data -->
+  <div class="card card-skeleton" aria-hidden="true">
+    <div class="card-img sk-img-block"></div>
+    <div class="card-info">
+      <div class="sk-line sk-line-lg"></div>
+      <div class="sk-line sk-line-sm"></div>
+      <div class="sk-line sk-line-md"></div>
+    </div>
+  </div>
 
-        <!-- Card 2 — Khandagiri -->
-        <article class="prop-card" aria-label="Green Valley Apartments — 2 BHK in Khandagiri">
-          <div class="card-img">
-            <img
-              src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600&q=75"
-              alt="Green Valley Apartments – 2 BHK affordable flats in Khandagiri, Bhubaneswar"
-              loading="lazy" width="600" height="340"
-            />
-            <span class="card-badge badge-popular">🔥 Most Enquired</span>
-          </div>
-          <div class="card-info">
-            <h3>Green Valley Apartments</h3>
-            <p class="card-price">₹48L – ₹58L</p>
-            <p class="card-loc">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-              Khandagiri · West Bhubaneswar
-            </p>
-            <div class="card-tags">
-              <span class="tag">2 BHK</span>
-              <span class="tag">1100 sq.ft</span>
-              <!--
-                "Good Time to Book" is more action-driving than "Under Construction".
-                It reframes a fact as an opportunity.
-              -->
-              <span class="tag tag-info">Good Time to Book</span>
-            </div>
-            <a href="#form" class="btn btn-card">Ask About This Flat →</a>
-          </div>
-        </article>
+  <div class="card card-skeleton" aria-hidden="true">
+    <div class="card-img sk-img-block"></div>
+    <div class="card-info">
+      <div class="sk-line sk-line-lg"></div>
+      <div class="sk-line sk-line-sm"></div>
+      <div class="sk-line sk-line-md"></div>
+    </div>
+  </div>
 
-        <!-- Card 3 — Nayapalli -->
-        <article class="prop-card" aria-label="Orchid Heights — 3 BHK in Nayapalli">
-          <div class="card-img">
-            <img
-              src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=75"
-              alt="Orchid Heights – spacious 3 BHK ready flats in Nayapalli, Bhubaneswar"
-              loading="lazy" width="600" height="340"
-            />
-            <span class="card-badge badge-value">💎 Best Value</span>
-          </div>
-          <div class="card-info">
-            <h3>Orchid Heights</h3>
-            <p class="card-price">₹72L – ₹95L</p>
-            <p class="card-loc">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round" aria-hidden="true">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-                <circle cx="12" cy="10" r="3"/>
-              </svg>
-              Nayapalli · Central Bhubaneswar
-            </p>
-            <div class="card-tags">
-              <span class="tag">3 BHK</span>
-              <span class="tag">1600 sq.ft</span>
-              <span class="tag tag-ready">✓ Ready to Move</span>
-            </div>
-            <a href="#form" class="btn btn-card">Ask About This Flat →</a>
-          </div>
-        </article>
+  <div class="card card-skeleton" aria-hidden="true">
+    <div class="card-img sk-img-block"></div>
+    <div class="card-info">
+      <div class="sk-line sk-line-lg"></div>
+      <div class="sk-line sk-line-sm"></div>
+      <div class="sk-line sk-line-md"></div>
+    </div>
+  </div>
 
-      </div>
+</div>
 
       <!--
         TRUST IMPROVEMENT: Real phone number in the footer note.
@@ -577,10 +512,10 @@
         Replace 99999 99999 with your real number.
       -->
       <div class="cards-footer">
-        <p>
-          These are just 3 options. We have more across Bhubaneswar —
-          Jagamara, Mancheswar, Sailashree Vihar and beyond.
-        </p>
+       <p class="cards-note" id="cardsNote" style="display:none">
+       These are just 3 options. We have more in Jagamara, Mancheswar and beyond.
+       <a href="tel:+919999999999">Call us: 99999 99999 →</a>
+       </p>
         <p class="cards-direct">
           Prefer to ask directly?
           <a href="tel:+919999999999" class="inline-call">
@@ -712,7 +647,7 @@
                 c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
             </svg>
             <!-- Replace with your number -->
-            99999 99999
+             Call us now!
           </a>
           <span class="pitch-hours">Mon–Sat · 9am – 7pm</span>
         </div>
@@ -744,7 +679,7 @@
           </p>
           <p class="success-alt">
             Can't wait? Message us right now:
-            <a href="https://wa.me/919999999999?text=Hi%2C%20I%20just%20filled%20the%20form.%20Looking%20for%20a%20flat%20in%20Bhubaneswar."
+            <a href="https://wa.me/916371446075?text=Hi%2C%20I%20just%20filled%20the%20form.%20Looking%20for%20a%20flat%20in%20Bhubaneswar."
               target="_blank" rel="noopener noreferrer">
               WhatsApp us →
             </a>
@@ -1049,14 +984,14 @@
   ════════════════════════════════════════════════════════ -->
   <footer class="footer" role="contentinfo">
     <div class="wrap footer-inner">
-      <a href="#" class="logo footer-logo" aria-label="BhubaneswarHomes home">
+      <a href="#" class="logo footer-logo" aria-label="Gharelu">
         <span class="logo-mark" aria-hidden="true">
           <svg viewBox="0 0 24 22" width="20" height="20" fill="none" aria-hidden="true">
             <path d="M12 1L1 9.5V21h7v-7h8v7h7V9.5L12 1z"
               stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
           </svg>
         </span>
-        <span class="logo-name">BhubaneswarHomes</span>
+        <span class="logo-name">Gharelu</span>
       </a>
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="#how-it-works">How It Works</a>
@@ -1075,7 +1010,7 @@
         "Local team" + city name = real trust.
       -->
       <p class="footer-copy">
-        © 2025 BhubaneswarHomes · A local property guidance team in Bhubaneswar, Odisha.
+        © 2025 Gharelu · A local property guidance team in Bhubaneswar, Odisha.
         No brokerage. No pressure. Genuine help.
       </p>
     </div>
@@ -1111,7 +1046,8 @@
     </svg>
     <span class="wa-ring" aria-hidden="true"></span>
   </a>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
