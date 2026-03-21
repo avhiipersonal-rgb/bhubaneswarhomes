@@ -1884,3 +1884,134 @@ button { cursor: pointer; font-family: var(--font-body); }
 @media (min-width: 480px) and (max-width: 768px) {
   #propCardsGrid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ================================================================
+   MOBILE HERO OVERRIDES — max-width 768px ONLY
+   Desktop is completely untouched
+   ================================================================ */
+
+/* Hide desktop versions on mobile */
+@media (max-width: 768px) {
+
+  /* Subtext — hide desktop, show mobile */
+  .hero-sub-desktop { display: none; }
+  .hero-sub-mobile  {
+    display: block;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,.65);
+    margin: 10px 0 16px;
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
+  /* Trust strip — hide desktop large cards */
+  .trust-strip-desktop { display: none !important; }
+
+  /* Trust chips — show only on mobile */
+  .trust-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .trust-chip {
+    padding: 6px 14px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.22);
+    border-radius: 100px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,.92);
+    white-space: nowrap;
+  }
+
+  /* Desktop CTAs — hide on mobile */
+  .hero-ctas-desktop { display: none !important; }
+
+  /* Mobile CTA — show only on mobile */
+  .hero-ctas-mobile { display: block; }
+  .btn-mobile-call {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    border-radius: 14px;
+    min-height: 56px;
+    letter-spacing: .02em;
+    box-shadow: 0 6px 20px rgba(249,115,22,.45);
+  }
+
+  /* Trust line below CTA */
+  .mobile-trust-line {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,.5);
+    line-height: 1.4;
+  }
+
+  /* Desktop hero note — hide on mobile */
+  .hero-note-desktop { display: none; }
+
+  /* Book Site Visit button — mobile only */
+  .btn-mobile-visit {
+    display: flex !important;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 14px;
+    min-height: 50px;
+    margin-top: 10px;
+    background: rgba(255,255,255,.12);
+    border: 1.5px solid rgba(255,255,255,.35) !important;
+    color: #ffffff !important;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: all .22s ease;
+  }
+  .btn-mobile-visit:hover {
+    background: rgba(255,255,255,.2);
+    border-color: rgba(255,255,255,.6) !important;
+  }
+
+  /* Hero section — tighter on mobile */
+  .hero-inner {
+    padding: 28px 16px 36px !important;
+  }
+
+  /* Headline — slightly smaller */
+  .hero-h1 {
+    font-size: 1.5rem !important;
+    line-height: 1.15 !important;
+    margin-bottom: 0;
+  }
+  .hero-range {
+    font-size: 1.5rem;
+  }
+
+  /* Eyebrow — tighter */
+  .eyebrow {
+    margin-bottom: 12px;
+    font-size: 0.65rem;
+    padding: 4px 11px;
+  }
+}
+
+/* Desktop — hide mobile-only elements */
+@media (min-width: 769px) {
+  .hero-sub-mobile    { display: none; }
+  .trust-chips        { display: none; }
+  .hero-ctas-mobile   { display: none; }
+  .hero-note-desktop  { display: flex; }
+  .hero-sub-desktop   { display: block; }
+  .trust-strip-desktop{ display: flex; }
+  .hero-ctas-desktop  { display: flex; }
+  .btn-mobile-visit   { display: none; }
+}
+
