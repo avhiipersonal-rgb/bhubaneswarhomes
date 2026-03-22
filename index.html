@@ -65,7 +65,7 @@
       <nav class="desk-nav" aria-label="Site navigation">
         <a href="#how-it-works">How It Works</a>
         <a href="#properties">Properties</a>
-        <a href="#form">Get Free Deals</a>
+        <a href="#leadForm">Get Free Deals</a>
       </nav>
 
       <!-- Right: phone number + call button -->
@@ -102,7 +102,7 @@
     <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation" hidden>
       <a href="#how-it-works" onclick="closeNav()">📋 How It Works</a>
       <a href="#properties"   onclick="closeNav()">🏠 Properties</a>
-      <a href="#form"         onclick="closeNav()">🎯 Get Free Deals</a>
+      <a href="#leadForm"         onclick="closeNav()">🎯 Get Free Deals</a>
     </nav>
   </header>
 
@@ -202,7 +202,7 @@
         </svg>
         Call Now — It's Free
       </a>
-      <a href="#form" class="btn btn-outline-white btn-lg">
+      <a href="#leadForm" class="btn btn-outline-white btn-lg">
         Book Free Site Visit
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
           stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
@@ -228,7 +228,7 @@
   </svg>
   Call Now — It's Free
 </a>
-  <a href="#form" class="btn btn-mobile-visit">
+  <a href="#leadForm" class="btn btn-mobile-visit">
     Book Free Site Visit
   </a>
   <p class="mobile-trust-line">
@@ -250,6 +250,90 @@
   </div>
 </section>
 
+<section class="section props-section" id="properties">
+    <div class="wrap">
+
+      <div class="section-hd">
+        <span class="section-tag">Current Options</span>
+        <!--
+          "What We're Working With Now" is honest and current.
+          "Currently" implies live inventory — not a static brochure.
+        -->
+        <h2>What We're Working With Right Now</h2>
+        <!--
+          "Team has personally visited" is a strong local trust signal.
+          It sounds human, not automated.
+        -->
+        <p>
+          These are real, active projects in Bhubaneswar.
+          Our team has personally visited each one.
+          We have more — call us for the full list.
+        </p>
+      </div>
+
+<div class="cards" id="propCardsGrid">
+
+  <!-- Skeleton loading cards — shown while Supabase fetches data -->
+  <div class="card card-skeleton" aria-hidden="true">
+    <div class="card-img sk-img-block"></div>
+    <div class="card-info">
+      <div class="sk-line sk-line-lg"></div>
+      <div class="sk-line sk-line-sm"></div>
+      <div class="sk-line sk-line-md"></div>
+    </div>
+  </div>
+
+  <div class="card card-skeleton" aria-hidden="true">
+    <div class="card-img sk-img-block"></div>
+    <div class="card-info">
+      <div class="sk-line sk-line-lg"></div>
+      <div class="sk-line sk-line-sm"></div>
+      <div class="sk-line sk-line-md"></div>
+    </div>
+  </div>
+
+  <div class="card card-skeleton" aria-hidden="true">
+    <div class="card-img sk-img-block"></div>
+    <div class="card-info">
+      <div class="sk-line sk-line-lg"></div>
+      <div class="sk-line sk-line-sm"></div>
+      <div class="sk-line sk-line-md"></div>
+    </div>
+  </div>
+
+</div>
+
+      <!--
+        TRUST IMPROVEMENT: Real phone number in the footer note.
+        "Call us directly" with a number feels personal and accessible.
+        This is especially effective for semi-educated users who prefer calling.
+        Replace 99999 99999 with your real number.
+      -->
+      <div class="cards-footer">
+       <p class="cards-note" id="cardsNote" style="display:none">
+       These are just 3 options. We have more in Jagamara, Mancheswar and beyond.
+       <a href="tel:+919999999999">Call us: 99999 99999 →</a>
+       </p>
+        <p class="cards-direct">
+          Prefer to ask directly?
+          <a href="tel:+919999999999" class="inline-call">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07
+                A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 1.14 2 2 0 012.18
+                1h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11
+                L6.91 8.15a16 16 0 006.94 6.94l1.51-1.52a2 2 0 012.11-.45
+                c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+            <!-- Replace with your real number -->
+            Call us
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </section>
 
   <!-- ═══════════════════════════════════════════════════════
        ③ HOW IT WORKS  ← NEW SECTION
@@ -338,7 +422,7 @@
           We are a local team based in Bhubaneswar.
           We work only in this city — so we know every area, every builder, and every fair price.
         </p>
-        <a href="#form" class="btn btn-orange">
+        <a href="#leadForm" class="btn btn-orange">
           Get Started — It's Free
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
@@ -417,7 +501,7 @@
       <!-- Dynamic result banner -->
       <div class="qs-result" id="qsResult" hidden aria-live="polite">
         <p id="qsResultText"></p>
-        <a href="#form" class="btn btn-orange" id="qsResultBtn">
+        <a href="#leadForm" class="btn btn-orange" id="qsResultBtn">
           Show Me Matching Flats
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
@@ -441,90 +525,7 @@
        • Card button: "Ask About This Flat" (personal) not "Get Price Details"
        • Footer note: phone number shown as a trust signal
   ════════════════════════════════════════════════════════ -->
-  <section class="section props-section" id="properties">
-    <div class="wrap">
-
-      <div class="section-hd">
-        <span class="section-tag">Current Options</span>
-        <!--
-          "What We're Working With Now" is honest and current.
-          "Currently" implies live inventory — not a static brochure.
-        -->
-        <h2>What We're Working With Right Now</h2>
-        <!--
-          "Team has personally visited" is a strong local trust signal.
-          It sounds human, not automated.
-        -->
-        <p>
-          These are real, active projects in Bhubaneswar.
-          Our team has personally visited each one.
-          We have more — call us for the full list.
-        </p>
-      </div>
-
-<div class="cards" id="propCardsGrid">
-
-  <!-- Skeleton loading cards — shown while Supabase fetches data -->
-  <div class="card card-skeleton" aria-hidden="true">
-    <div class="card-img sk-img-block"></div>
-    <div class="card-info">
-      <div class="sk-line sk-line-lg"></div>
-      <div class="sk-line sk-line-sm"></div>
-      <div class="sk-line sk-line-md"></div>
-    </div>
-  </div>
-
-  <div class="card card-skeleton" aria-hidden="true">
-    <div class="card-img sk-img-block"></div>
-    <div class="card-info">
-      <div class="sk-line sk-line-lg"></div>
-      <div class="sk-line sk-line-sm"></div>
-      <div class="sk-line sk-line-md"></div>
-    </div>
-  </div>
-
-  <div class="card card-skeleton" aria-hidden="true">
-    <div class="card-img sk-img-block"></div>
-    <div class="card-info">
-      <div class="sk-line sk-line-lg"></div>
-      <div class="sk-line sk-line-sm"></div>
-      <div class="sk-line sk-line-md"></div>
-    </div>
-  </div>
-
-</div>
-
-      <!--
-        TRUST IMPROVEMENT: Real phone number in the footer note.
-        "Call us directly" with a number feels personal and accessible.
-        This is especially effective for semi-educated users who prefer calling.
-        Replace 99999 99999 with your real number.
-      -->
-      <div class="cards-footer">
-       <p class="cards-note" id="cardsNote" style="display:none">
-       These are just 3 options. We have more in Jagamara, Mancheswar and beyond.
-       <a href="tel:+919999999999">Call us: 99999 99999 →</a>
-       </p>
-        <p class="cards-direct">
-          Prefer to ask directly?
-          <a href="tel:+919999999999" class="inline-call">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-              stroke-linejoin="round" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07
-                A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.4 1.14 2 2 0 012.18
-                1h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11
-                L6.91 8.15a16 16 0 006.94 6.94l1.51-1.52a2 2 0 012.11-.45
-                c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/>
-            </svg>
-            <!-- Replace with your real number -->
-            Call us
-          </a>
-        </p>
-      </div>
-
-    </div>
-  </section>
+  
 
 
   <!-- ═══════════════════════════════════════════════════════
@@ -712,6 +713,17 @@
               aria-required="true" aria-describedby="fPhoneErr" />
             <span class="ferr" id="fPhoneErr" role="alert">Please enter a valid 10-digit mobile number.</span>
           </div>
+          <!-- BHK Type -->
+          <div class="fg">
+            <label for="fBHK">How Many Bedrooms?</label>
+            <select id="fBHK" name="bhk">
+            <option value="" disabled selected>Choose bedroom type</option>
+            <option value="2BHK">2 BHK</option>
+            <option value="3BHK">3 BHK</option>
+            <option value="Any">Not sure yet</option>
+            </select>
+          </div>
+          
 
           <!-- Budget -->
           <div class="fg">
@@ -985,7 +997,7 @@
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="#how-it-works">How It Works</a>
         <a href="#properties">Properties</a>
-        <a href="#form">Get Free Deals</a>
+        <a href="#leadForm">Get Free Deals</a>
         <!--
           TRUST: Phone number in footer is a standard credibility marker.
           Any serious business has it here.
