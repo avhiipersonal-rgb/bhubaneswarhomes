@@ -125,6 +125,28 @@ function closeNav() {
    ✓ Samsung Internet
    ✓ Older Android WebView (falls back to instant scroll)
    ═══════════════════════════════════════════════════════════════ */
+
+/* ── Smart scroll: desktop → #form section, mobile → #leadForm ── */
+function smartFormScroll(e) {
+  e.preventDefault();
+  closeNav();
+
+  var isMobile = window.innerWidth < 768;
+  var targetId = isMobile ? "#leadForm" : "#form";
+  var target   = document.querySelector(targetId);
+  if (!target) return;
+
+  var headerH  = getHeaderHeight();
+  var gap      = isMobile ? 12 : 24;
+  var top      = Math.max(0, target.getBoundingClientRect().top + window.scrollY - headerH - gap);
+  window.scrollTo({ top: top, behavior: "smooth" });
+}
+
+/* Apply smart scroll to all form-pointing links */
+document.querySelectorAll('a[href="#form"], a[href="#leadForm"], a[href="#leadform"]').forEach(function (link) {
+  link.addEventListener("click", smartFormScroll);
+});
+
 (function initSmoothScroll() {
 
   /* Feature detect smooth scroll support */
@@ -215,12 +237,21 @@ function closeNav() {
       state[group] = value;
 
       /* Pre-fill form select when budget is chosen */
-      if (group === "budget") {
-        var formBudget = document.getElementById("fBudget");
-        if (formBudget && budgetToForm[value]) {
-          formBudget.value = budgetToForm[value];
-        }
+      /* Pre-fill budget dropdown */
+    if (group === "budget") {
+      var formBudget = document.getElementById("fBudget");
+      if (formBudget && budgetToForm[value]) {
+        formBudget.value = budgetToForm[value];
       }
+    }
+
+    /* Pre-fill BHK dropdown */
+    if (group === "bhk") {
+      var formBHK = document.getElementById("fBHK");
+      if (formBHK) {
+        formBHK.value = value;
+      }
+    }
 
       /* Show result banner once both are selected */
       showResultBanner();
@@ -425,6 +456,7 @@ function closeNav() {
       timestamp: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
       name:      (document.getElementById("fName").value    || "").trim(),
       phone:     (document.getElementById("fPhone").value   || "").trim(),
+      bhk:       document.getElementById("fBHK").value      || "Not specified",
       budget:    document.getElementById("fBudget").value   || "Not specified",
       timeline:  document.getElementById("fTimeline").value || "Not specified",
       source:    "Landing Page v6"
@@ -534,7 +566,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             prop.location +
           "</p>" +
           "<div class='tags'>" + tagsHtml + "</div>" +
-          "<a href='#form' class='btn btn-card'>Ask About This Flat →</a>" +
+          "<a href='#leadForm' class='btn btn-card'>Ask About This Flat →</a>" +
         "</div>";
 
       grid.appendChild(article);
