@@ -2,7 +2,7 @@
    BHUBANESWAR HOMES — ADMIN PANEL LOGIC
    admin.js
    ================================================================ */
-
+"use strict";
 /* ── AUTH: Login + session check ── */
 async function doLogin() {
   var email    = document.getElementById("loginEmail").value.trim();
@@ -38,6 +38,7 @@ async function doLogin() {
 function showAdminPanel() {
   document.getElementById("loginScreen").style.display = "none";
   document.getElementById("adminPanel").style.display  = "block";
+  initAll();
 }
 
 function hideAdminPanel() {
@@ -46,14 +47,26 @@ function hideAdminPanel() {
 }
 
 /* Check if already logged in on page load */
+/* ── SINGLE DOMContentLoaded ── */
 document.addEventListener("DOMContentLoaded", async function () {
+
+  /* Check if already logged in */
   var { data } = await db.auth.getSession();
   if (data.session) {
     showAdminPanel();
   }
 });
 
-"use strict";
+/* Called after login or on session restore */
+function initAll() {
+  initImagePicker();
+  initForm();
+  initRefresh();
+  initReplaceModal();
+  initDeleteModal();
+  loadProperties();
+}
+
 
 /* ── Globals ── */
 const TABLE   = "properties";
@@ -89,15 +102,6 @@ const emptyState    = document.getElementById("emptyState");
 const errorState    = document.getElementById("errorState");
 const propCount     = document.getElementById("propCount");
 
-/* ── INIT ── */
-document.addEventListener("DOMContentLoaded", function () {
-  initImagePicker();
-  initForm();
-  initRefresh();
-  initReplaceModal();
-  initDeleteModal();
-  loadProperties();
-});
 
 
 /* ================================================================
